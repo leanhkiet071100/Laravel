@@ -78,8 +78,8 @@
                       </td>
                   
                       <td class="align-middle text-end" >
-                            <a href="{{route('DiaDanh.SuaDiaDanh')}}" > <button type="button" class="btn btn-success">Duyệt</button></a>
-                            <a href="{{route('QuanAn.MonAn')}}"><button type="button" class="btn btn-warning">Chi tiết</button></a>
+                            <a href="" > <button type="button" class="btn btn-success">Duyệt</button></a>
+                            <a href="{{route('DiaDanh.ChiTietDiaDanh')}}"><button type="button" class="btn btn-warning">Chi tiết</button></a>
                             <button type="button" class="btn btn-danger">Đéo duyệt</button>
                       </td>
                     </tr>

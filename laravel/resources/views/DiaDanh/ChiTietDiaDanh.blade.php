@@ -108,8 +108,8 @@
             <div class="container-fliud text-dark">
                 <span><b>Khác: </b></span>
                 <div class="action">
-                    <button type="button" class="btn btn-outline-danger">Quán ăn</button>
-                    <button type="button" class="btn btn-outline-danger">Nơi lưu trú</button>                 
+                    <a href="{{route('ChiTietDiaDanh.dsQuanAn')}}"><button type="button" class="btn btn-outline-danger">Quán ăn</button></a>
+                      <a href="{{route('ChiTietDiaDanh.dsNoiLuuTru')}}"><button type="button" class="btn btn-outline-danger">Nơi Lưu Trú</button></a>
                 </div>                     
             </div>
         </div>

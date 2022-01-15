@@ -101,9 +101,9 @@
                         <span class="text-secondary text-xs font-weight-bold">100</span>
                       </td>
                       <td class="align-middle text-end">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
+                               <a href="{{route('DiaDanh.SuaDiaDanh')}}" > <button type="button" class="btn btn-success">Sửa</button></a>
+                          <a href="{{route('DiaDanh.ChiTietDiaDanh')}}"><button type="button" class="btn btn-warning">chi tiết</button></a>
+                          <button type="button" class="btn btn-danger">Xóa</button>
                       </td>
                     </tr>
                     <tr>

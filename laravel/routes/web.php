@@ -81,3 +81,15 @@ Route::prefix('DuyetDiaDanh')->group(function(){
         })->name("dsDuyetDiadanh");
 });
 });
+
+Route::prefix('ChiTietDiaDanh')->group(function(){
+    Route::name('ChiTietDiaDanh.')->group(function(){ 
+        Route::get('/', function(){
+            return view('DSNoiLuuTru-MonAn.dsNoiLuuTru');
+        })->name("dsNoiLuuTru");
+          Route::get('/QuanAn', function(){
+            return view('DSNoiLuuTru-MonAn.QuanAnDiaDanh');
+        })->name("dsQuanAn");
+});
+});
+
