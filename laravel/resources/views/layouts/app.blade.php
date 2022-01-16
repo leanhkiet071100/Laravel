@@ -380,7 +380,7 @@
         <div class="col-12">
           <div class="card mb-4">
           <div class="container">
-            @yield('content')
+         
             @show
         </div>
           </div>
