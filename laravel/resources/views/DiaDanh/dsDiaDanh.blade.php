@@ -81,13 +81,13 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                            <img src="#" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                        
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$list->}}</p>
                     
                       </td>
                     
