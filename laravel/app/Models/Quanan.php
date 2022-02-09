@@ -12,10 +12,10 @@ class Quanan extends Model
 
     protected $guarded = [];
     public function monan(){
-        return $this->hasMany('App\Models\Monan', 'Id_Quanan', 'Id_Mon');
+        return $this->hasMany('App\Models\Monan', 'Id_Quanan', 'id');
     }
 
     public function diadanh(){
-        return $this->belongsTo('App\Models\Diadanh', 'Id_Ddanh', 'Id_Quan');
+        return $this->belongsTo('App\Models\Diadanh', 'Id_Ddanh', 'id');
     }
 }

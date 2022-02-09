@@ -11,7 +11,7 @@ class Monan extends Model
     use softDeletes;
     
     public function quanan(){
-        return $this->belongsTo('App\Models\Quanan', 'Id_Quanan', 'Id_Quanan');
+        return $this->belongsTo('App\Models\Quanan', 'Id_Quanan', 'id');
     }
 
 }

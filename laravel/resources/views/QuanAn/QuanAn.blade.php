@@ -79,13 +79,15 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$value->Diachi_Quan}}</span>
                       </td>
-                   
-                      <td class="align-middle text-center">
+                     <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$value->SDT_Quan}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$value->Ten_Ddanh}}</span>
+                        @foreach($lsDiaDanh as $valueDD)
+                        <span class="text-secondary text-xs font-weight-bold">@if($value->Id_Ddanh==$valueDD->id) {{$valueDD->Ten_Ddanh}}   @endif</span>
+                        @endforeach
                       </td>
+                    
                       @if($value->TrangThaiQuanAn  == 1)
                           <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
@@ -97,9 +99,9 @@
                       @endif
                      
                       <td class="align-middle text-end">
-                          <a href="{{route('QuanAn.SuaQuanAn')}}" > <button type="button" class="btn btn-success">Sửa</button></a>
+                          <a href="{{route('QuanAn.SuaQuanAn', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
                           <a href="{{route('QuanAn.MonAn')}}"><button type="button" class="btn btn-warning">Món ăn</button></a>
-                          <button type="button" class="btn btn-danger">Xóa</button>
+                          <a onclick="return confirm('bạn có chắc muốn quán {{$value->Ten_Quan}} xoá')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
                     @endforeach

@@ -21,7 +21,7 @@ class Diadanh extends Model
    }
 
    public function quanan(){
-       return $this->hasMany(Quanan::class, 'Id_Ddanh', 'Id_Ddanh');
+       return $this->hasMany(Quanan::class, 'Id_Ddanh', 'id');
    }
 }
     

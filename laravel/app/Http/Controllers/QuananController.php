@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\QuanAn;
+use App\Models\Quanan;
 use App\Models\Monan;
+use App\Models\Diadanh;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\QuanAnRequest;
 use Illuminate\Support\Facades\Storage;
@@ -19,9 +20,9 @@ class QuanAnController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected function fixImage(quanans $quanans)
+    protected function fixImage(Quanan $quanans)
         {
-            if(Storage::disk('public')->exists($quanans->hinh)){
+            if(Storage::disk('public')->exists($quanans->Hinh_Quan)){
                  $quanans->Hinh_Quan = Storage::url( $quanans->Hinh_Quan);
             }else {
                  $quanans->Hinh_Quan = '/img/no_img.png';
@@ -29,8 +30,13 @@ class QuanAnController extends Controller
         }
     public function index()
     {
-        $lsquanan = DB::table('quanans')->select('quanans.Ten_Quan', 'quanans.Hinh_Quan', 'quanans.Diachi_Quan', 'quanans.SDT_Quan', 'quanans.TrangThaiQuanAn', 'diadanhs.Ten_Ddanh') ->join('diadanhs', 'quanans.Id_Ddanh', '=', 'diadanhs.id')->get();
-        return View('QuanAn.QuanAn',['lsquanan' => $lsquanan]);
+       //$lsquanan1 = DB::table('quanans')->select('quanans.Ten_Quan', 'quanans.Hinh_Quan', 'quanans.Diachi_Quan', 'quanans.SDT_Quan', 'quanans.TrangThaiQuanAn', 'diadanhs.Ten_Ddanh') ->join('diadanhs', 'quanans.Id_Ddanh', '=', 'diadanhs.id')->get();
+        $lsquanan = Quanan::all();
+        foreach ($lsquanan as $quanans) {
+            $this->fixImage($quanans);
+        }
+        $lsDiaDanh = DB::table('diadanhs')->get();
+        return View('QuanAn.QuanAn',['lsquanan' => $lsquanan, 'lsDiaDanh' => $lsDiaDanh]);
     } 
 
     /**
@@ -41,7 +47,8 @@ class QuanAnController extends Controller
      */
     public function create()
     {
-        $lsDiaDanh = DB::table('diadanhs')->get();
+       $lsDiaDanh = DB::table('diadanhs')->get(); 
+     
         return View('QuanAn.ThemQuanAn',['lsDiaDanh' => $lsDiaDanh]);
     }
 
@@ -117,6 +124,13 @@ class QuanAnController extends Controller
         //
     }
 
+       public function edit($id)
+    {
+        $quanan = Quanan::find($id);
+        $this->fixImage($quanan);
+        $lsDiaDanh = DB::table('diadanhs')->get();
+        return view('QuanAn.SuaQuanAn',['quanan' => $quanan, 'lsDiaDanh' => $lsDiaDanh]);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -124,9 +138,22 @@ class QuanAnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+     public function update(QuanAnRequest $request , $id)
     {
-        //
+        $quanan = Quanan::find($id);
+         if($request->hasFile('hinh')){
+            $quanan->Hinh_Quan = $request->file('hinh')->store('img/quanan/'.$quanan->id,'public');
+        }
+        $quanan->fill([
+            'Ten_Quan'  => $request->input('tenquanan'),
+     
+            'Diachi_Quan' => $request->input('diachiquanan'),
+            'SDT_Quan' => $request->input('sdt'),
+            'TrangThaiQuanAn' => 1,
+            'Id_Ddanh' => $request->input('DiaDanh'),
+         ]);
+        $quanan->save();
+       return Redirect::route('QuanAn.dsQuanAn')->with('success', 'Sửa thành công');
     }
 
     /**
@@ -137,6 +164,8 @@ class QuanAnController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $quanan = Quanan::find($id);
+        $quanan->delete();
+        return Redirect::route('QuanAn.dsQuanAn')->with('success', 'Xóa thành công');
     }
 }

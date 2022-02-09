@@ -21,7 +21,7 @@
       @endif -->
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Tên quán ăn</label>
-      <input type="text" class="form-control" id="NhuCau" placeholder="Tên quán ăn" name="tenquanan" value="{{old('tenquanan')}}">
+      <input type="text" class="form-control" id="NhuCau" placeholder="Tên quán ăn" name="tenquanan" value="{{old('tenquanan')}} ">
      @error('tenquanan')
         <span style="color:red"> {{$message}}</span>
       @enderror
@@ -35,7 +35,7 @@
     </div>
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label" >Địa chỉ quán ăn</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="diachiquanan" value="{{old('diachiquanan')}}"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="diachiquanan" value="">{{old('diachiquanan')}}</textarea>
          @error('diachiquanan')
         <span style="color:red"> {{$message}}</span>
       @enderror
@@ -55,7 +55,7 @@
       <select class="form-select" aria-label="Default select example" name="DiaDanh">
         <option selected>Địa danh</option>
         @foreach($lsDiaDanh as $value)
-          <option value="{{$value->Id_Ddanh}}">{{$value->Ten_Ddanh}}</option>
+          <option value="{{$value->id}}">{{$value->Ten_Ddanh}}</option>
         @endforeach
       </select>
     </div>
