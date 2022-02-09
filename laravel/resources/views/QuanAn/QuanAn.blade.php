@@ -86,7 +86,7 @@
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$value->Ten_Ddanh}}</span>
                       </td>
-                      @if($value->Trangthai  == 1)
+                      @if($value->TrangThaiQuanAn  == 1)
                           <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
                       </td>

@@ -29,7 +29,7 @@ class QuanAnController extends Controller
         }
     public function index()
     {
-        $lsquanan = DB::table('quanans')->select('quanans.Ten_Quan', 'quanans.Hinh_Quan', 'quanans.Diachi_Quan', 'quanans.SDT_Quan', 'quanans.Trangthai', 'diadanhs.Ten_Ddanh') ->join('diadanhs', 'quanans.Id_Ddanh', '=', 'diadanhs.Id_Ddanh')->get();
+        $lsquanan = DB::table('quanans')->select('quanans.Ten_Quan', 'quanans.Hinh_Quan', 'quanans.Diachi_Quan', 'quanans.SDT_Quan', 'quanans.TrangThaiQuanAn', 'diadanhs.Ten_Ddanh') ->join('diadanhs', 'quanans.Id_Ddanh', '=', 'diadanhs.id')->get();
         return View('QuanAn.QuanAn',['lsquanan' => $lsquanan]);
     } 
 
@@ -91,7 +91,7 @@ class QuanAnController extends Controller
             'Hinh_Quan' =>  '',
             'Diachi_Quan' => $request->input('diachiquanan'),
             'SDT_Quan' => $request->input('sdt'),
-            'Trangthai' => 1,
+            'TrangThaiQuanAn' => 1,
             'Id_Ddanh' => $request->input('DiaDanh'),
          ]);
          $quanan->save();
