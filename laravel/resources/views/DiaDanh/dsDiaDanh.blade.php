@@ -61,7 +61,7 @@
           <div class="col-6 align-middle text-end">
             <a href="{{route('DiaDanh.ThemDiaDanh')}}" class="text-end">Thêm địa danh</a>
           </div>
-   </div>
+      </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -77,36 +77,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="#" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                       
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$list->}}</p>
-                    
-                      </td>
-                    
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Đào thị mộng cầm</span>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">100</span>
-                      </td>
-                      <td class="align-middle text-end">
-                               <a href="{{route('DiaDanh.SuaDiaDanh')}}" > <button type="button" class="btn btn-success">Sửa</button></a>
-                          <a href="{{route('DiaDanh.ChiTietDiaDanh')}}"><button type="button" class="btn btn-warning">chi tiết</button></a>
-                          <button type="button" class="btn btn-danger">Xóa</button>
-                      </td>
-                    </tr>
-                    <tr>
+                 @foreach($lsdiadanh as $key => $value)
+                 <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
@@ -116,16 +88,26 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$value->Ten_Ddanh}}</p>
                   
                       </td>
                     
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Lưu Thành Công</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Hoten_Nguoidung}}</span>
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Đã xóa</span>
+                    
+                            @if($value->Trangthai == 1)
+                       <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
                       </td>
+                    
+                      @else
+                           <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-secondary">không hoạt động</span>
+                      </td>
+                      @endif
+                    
+                      
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">1</span>
                       </td>
@@ -135,6 +117,8 @@
                           <button type="button" class="btn btn-danger">Xóa</button>
                       </td>
                     </tr>
+                 @endforeach
+                    
                   </tbody>
                 </table>
               </div>
