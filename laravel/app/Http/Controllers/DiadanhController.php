@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Diadanh;
+use App\Models\Nguoidung;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\storeDiaDanhRequest;
+use App\Http\Requests\UpdateDiaDanhRequest;
 
 class DiadanhController extends Controller
 {
@@ -13,9 +16,20 @@ class DiadanhController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected function fixImage(SanPham $sanPham)
+    {
+        if(Storage::disk('public')->exists($sanPham->hinh)){
+            $sanPham->hinh = Storage::url($sanPham->hinh);
+        }else {
+            $sanPham->hinh = '/img/no_img.png';
+        }
+    }
+
     public function index()
     {
-                     
+        $lsdiadanh = DB::table('diadanh')->select('diadanh.Ten_Ddanh','nguoidungs.Hoten_Nguoidung', 'diadanh.Trangthai' )->join('nguoidungs', 'diadanh.Id_Nguoidung', '=','nguoidungs.Id_Nguoidung')->get();
+
+        return View('DiaDanh.dsDiaDanh',['lsdiadanh' => $lsdiadanh]);
     }
 
     /**

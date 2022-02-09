@@ -16,8 +16,9 @@ class QuananController extends Controller
      */
     public function index()
     {
-
-    }
+        $lsquanan = DB::table('quanan')->select('quanan.Ten_Quan', 'quanan.Hinh_Quan', 'quanan.Diachi_Quan', 'quanan.SDT_Quan', 'quanan.Trangthai', 'diadanh.Ten_Ddanh') ->join('diadanh', 'quanan.Id_Ddanh', '=', 'diadanh.Id_Ddanh')->get();
+        return View('QuanAn.QuanAn',['lsquanan' => $lsquanan]);
+    } 
 
     /**
      * Store a newly created resource in storage.

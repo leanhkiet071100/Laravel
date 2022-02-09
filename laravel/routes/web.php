@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\DiaDanhController;
+use App\Http\Controllers\NhuCauController;
+use App\Http\Controllers\QuanAnController;
+use App\Http\Controllers\NoiluutruController;
+use App\Http\Controllers\MonanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +29,8 @@ Route::get('/Dashboard', function(){
 
 Route::prefix('DiaDanh')->group(function(){
     Route::name('DiaDanh.')->group(function(){ 
-        Route::get('/', function(){
-        return view('DiaDanh.dsDiaDanh');
-    })->name('dsDiaDanh');
+        Route::get('/', [DiadanhController::class, 'index'])->name('dsDiaDanh');
+    
     Route::get('/Sua', function(){
         return view('DiaDanh.SuaDiaDanh');
     })->name('SuaDiaDanh');
@@ -41,35 +46,27 @@ Route::prefix('DiaDanh')->group(function(){
 
 Route::prefix('NhuCau')->group(function(){
     Route::name('NhuCau.')->group(function(){ 
-        Route::get('/', function(){
-            return view('NhuCau.NhuCau');
-        })->name("dsNhuCau");
+        Route::get('/', [NhuCauController::class, 'index'])->name("dsNhuCau");
 });
    
 });
 
 Route::prefix('QuanAn')->group(function(){
     Route::name('QuanAn.')->group(function(){ 
-        Route::get('/', function(){
-            return view('QuanAn.QuanAn');
-        })->name("dsQuanAn");
+        Route::get('/', [QuanAnController::class, 'index'])->name("dsQuanAn");
         Route::get('/ThemQuanAn', function(){
             return view('QuanAn.ThemQuanAn');
         })->name("ThemQuanAn");
         Route::get('/SuaQuanAn', function(){
             return view('QuanAn.SuaQuanAn');
         })->name("SuaQuanAn");
-        Route::get('/MonAn', function(){
-            return view('QuanAn.MonAn');
-        })->name("MonAn");
+        Route::get('/MonAn', [MonanController::class, 'index'])->name("MonAn");
 });
 });
 
 Route::prefix('NoiLuuTru')->group(function(){
     Route::name('NoiLuuTru.')->group(function(){ 
-        Route::get('/', function(){
-            return view('NoiLuuTru.NoiLuuTru');
-        })->name("dsNoiLuuTru");
+        Route::get('/',[NoiluutruController::class, 'index'])->name("dsNoiLuuTru");
 });
 });
 

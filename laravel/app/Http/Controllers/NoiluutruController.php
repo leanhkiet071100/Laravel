@@ -3,21 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Monan;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;  
 
-class MonanController extends Controller
+class NoiluutruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+       public function index()
     {
-        $lsmonan =  DB::table('monan')->where('monan.Id_Quan', 1)->join('quanan', 'monan.Id_Quan', '=', 'quanan.Id_Quan')->get();
-        $quanan = DB::table('quanan')->where('quanan.Id_Quan', 1)->get();
-        return view('QuanAn.MonAn',['lsmonan' => $lsmonan, 'quanan' => $quanan]);
+        $lsnoiluutru = DB::table('noiluutru')->select('noiluutru.Ten_Noiluutru', 'noiluutru.Hinh_Noiluutru', 'noiluutru.Diachi_Noiluutru', 'noiluutru.SDT_Noiluutru', 'noiluutru.Trangthai','diadanh.Ten_Ddanh') ->join('diadanh', 'noiluutru.Id_Ddanh', '=', 'diadanh.Id_Ddanh')->get();
+        $diadanh = DB::table('diadanh')->get();
+        return view('NoiLuuTru.NoiLuuTru',['lsnoiluutru' => $lsnoiluutru, 'diadanh' => $diadanh]);
+
     }
 
     /**
@@ -39,7 +34,7 @@ class MonanController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

@@ -8,17 +8,20 @@
 
 @section('sidebar')
     @parent
-     <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/ivancik.jpg');">
+    @foreach($quanan as $value)
+     <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('{{$value->Hinh_Quan}}');">
               <span class="mask bg-gradient-dark"></span>
               <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-                <h5 class="text-white font-weight-bolder mb-4 pt-2 text-center">Tên quán ăn</h5>
-                <p class="text-white text-center">Địa chỉ quán ăn</p>
+                <h5 class="text-white font-weight-bolder mb-4 pt-2 text-center">{{$value->Ten_Quan}}</h5>
+                <p class="text-white text-center">{{$value->Diachi_Quan}}</p>
                 <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
                   Read More
                   <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
                 </a>
               </div>
       </div>
+    @endforeach
+    
  <div class="card-header pb-0">
               <h6>Danh sách món ăn</h6>
             </div>
@@ -35,41 +38,27 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($lsmonan as $key => $value)
                     <tr>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">1</span>
+                        <span class="badge badge-sm bg-gradient-success">{{$key+1}}</span>
                       </td>
                       <td class="align-middle text-center">
-                      <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                      <img src="{{$value->Hinh_Mon}}" class="avatar avatar-sm me-3" alt="user1">
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bành xèo</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Ten_Mon}}</span>
                       </td><td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">100.000</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Gia_ban}}</span>
                       </td>
                       <td class="align-middle text-end">
                       <button type="button" class="btn btn-success">Sửa</button>
                         <button type="button" class="btn btn-danger">Xóa</button>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">2</span>
-                      </td>
-                      <td class="align-middle text-center">
-                      <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bánh bột lọc</span>
-                      </td>
-                       </td><td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">100.000</span>
-                      </td>
-                      <td class="align-middle text-end">
-                      <button type="button" class="btn btn-success">Sửa</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                      </td>
-                    </tr>
+                    @endforeach
+               
+                 
                   </tbody>
                 </table>
               </div>

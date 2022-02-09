@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Nguoidung extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Ten_Ddanh',
-        'Ten_Goikhac',
-        'Mota',
-        'Diachi_Ddanh'
-    ];
-    protected $primaryKey = "Id_Nguoidung";
+    use SoftDeletes;
+    public function diadanh(){
+        return $this->belongsToMany(Diadanh::class);
+    }
 }
    

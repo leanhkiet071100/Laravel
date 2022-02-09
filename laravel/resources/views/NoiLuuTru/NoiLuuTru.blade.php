@@ -20,13 +20,15 @@
             <input type="text" class="form-control" id="TenNoiLuuTruTimKiem" placeholder="Tên nơi lưu trú">
           </div>
         </div>
+       
         <div class="col-3">
             <label for="exampleFormControlInput1" class="form-label">Địa danh</label>
             <select class="form-select" aria-label="Default select example">
               <option selected>All</option>
-              <option value="1">Tây bắc</option>
-              <option value="2">Dak lak</option>
-              <option value="3">Amata</option>
+              @foreach($diadanh as $key =>$value)
+              <option value="{{$key}}">{{$value->Ten_Ddanh}}</option>
+            
+              @endforeach
             </select>
         </div>
        
@@ -45,49 +47,48 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hình</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ </th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa danh</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trang thái</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">1</span>
+                    @foreach($lsnoiluutru as $key => $value)
+                   <tr>
+                        <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{{$value->Hinh_Noiluutru}}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                       
+                        </div>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Đi phượt</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Ten_Noiluutru}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Số 12 đường N14 Trung Hòa Trảng Bom</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Diachi_Noiluutru}}</span>
                       </td> <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Bến tre</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Ten_Ddanh}}</span>
                       </td>
+                         @if($value->Trangthai  == 1)
+                          <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
+                      </td>
+                      @else
+                          <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-secondary">Ngưng hoạt động</span>
+                      </td>
+                      @endif
                       <td class="align-middle text-end">
                       <button type="button" class="btn btn-success">Sửa</button>
                         <button type="button" class="btn btn-danger">Xóa</button>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">2</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Cắm trại</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Số 12 đường N14 Trung Hòa Trảng Bom</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Quy nhơn</span>
-                      </td>
-                      <td class="align-middle text-end">
-                      <button type="button" class="btn btn-success">Sửa</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                      </td>
-                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
@@ -115,9 +116,10 @@
   <div class="col-4">
 <select class="form-select" aria-label="Default select example">
   <option selected>Địa danh</option>
-  <option value="1">Đồng Nai</option>
-  <option value="2">Quy Nhơn</option>
-  <option value="3">Bà rịa - bến tre</option>
+  @foreach($diadanh as $key =>$value)
+    <option value="{{$key}}">{{$value->Ten_Ddanh}}</option>
+            
+  @endforeach
 </select>
   </div>
 </div>

@@ -8,16 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Monan extends Model
 {
     use HasFactory;
+    use softDeletes;
     
-    protected $fillable = [
-        'Id_Mon',
-        'Id_Quan',
-        'Ten_Mon',
-        'Hinh_Mon',
-        'Gia_ban',
-        'Trangthai'
-    ];
-    protected $primaryKey = "Id_Mon";
-    protected $table = "monan";
+    public function quanan(){
+        return $this->belongsTo('App\Models\Quanan', 'Id_Quanan', 'Id_Quanan');
+    }
 
 }

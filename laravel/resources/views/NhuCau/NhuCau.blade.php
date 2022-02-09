@@ -31,34 +31,26 @@
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên nhu cầu</th>
+                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($lsnhucau as $key => $value)
                     <tr>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">1</span>
+                        <span class="badge badge-sm bg-gradient-success">{{$key+1}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Đi phượt</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Tennhucau}}</span>
                       </td>
                       <td class="align-middle text-end">
                       <button type="button" class="btn btn-success">Sửa</button>
                         <button type="button" class="btn btn-danger">Xóa</button>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">2</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Cắm trại</span>
-                      </td>
-                      <td class="align-middle text-end">
-                      <button type="button" class="btn btn-success">Sửa</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                      </td>
-                    </tr>
+                    @endforeach
+                    
                   </tbody>
                 </table>
               </div>
