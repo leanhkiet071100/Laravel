@@ -13,11 +13,11 @@ class HinhanhBaiviet extends Migration
      */
     public function up()
     {
-        Schema::create('hinhanh_baiviet', function (Blueprint $table) {
-            $table->id('Id_Hinhanh');
+        Schema::create('hinhanh_baiviets', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Baiviet');
             $table->string('Ten_Hinhanh');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiHinhAnhBV');
             $table->timestamps();
             $table->softDeletes();
         });

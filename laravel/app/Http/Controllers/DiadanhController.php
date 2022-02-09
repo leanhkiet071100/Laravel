@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Diadanh;
 use App\Models\Nguoidung;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\storeDiaDanhRequest;
-use App\Http\Requests\UpdateDiaDanhRequest;
+use App\Http\Requests\storeDiadanhRequest;
+use App\Http\Requests\UpdateDiadanhRequest;
 
 class DiadanhController extends Controller
 {
@@ -16,12 +16,12 @@ class DiadanhController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected function fixImage(SanPham $sanPham)
+    protected function fixImage(Diadanh $DiaDanh)
     {
-        if(Storage::disk('public')->exists($sanPham->hinh)){
-            $sanPham->hinh = Storage::url($sanPham->hinh);
+        if(Storage::disk('public')->exists($DiaDanh->hinh)){
+            $DiaDanh->hinh = Storage::url($DiaDanh->hinh);
         }else {
-            $sanPham->hinh = '/img/no_img.png';
+            $DiaDanh->hinh = '/img/no_img.png';
         }
     }
 

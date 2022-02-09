@@ -13,14 +13,14 @@ class Quanan extends Migration
      */
     public function up()
     {
-        Schema::create('quanan', function (Blueprint $table) {
-            $table->id('Id_Quan');
+        Schema::create('quanans', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Ddanh');
             $table->string('Ten_Quan');
             $table->string('Hinh_Quan');
             $table->string('Diachi_Quan');
             $table->string('SDT_Quan');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiQuanAn');
             $table->timestamps();
             $table->softDeletes();
         });

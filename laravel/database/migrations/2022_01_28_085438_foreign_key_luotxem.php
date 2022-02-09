@@ -13,9 +13,9 @@ class ForeignKeyLuotxem extends Migration
      */
     public function up()
     {
-        Schema::table('luotxem', function (Blueprint $table) {
-            $table->foreign('Id_Nguoidung')->references('Id_Nguoidung')->on('nguoidung');
-            $table->foreign('Id_Ddanh')->references('Id_Ddanh')->on('diadanh');
+        Schema::table('luotxems', function (Blueprint $table) {
+            $table->foreign('Id_Nguoidung')->references('id')->on('nguoidungs');
+            $table->foreign('Id_Ddanh')->references('id')->on('diadanhs');
         });
     }
 

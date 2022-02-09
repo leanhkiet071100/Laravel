@@ -14,8 +14,8 @@ class ForeignKeyQuanan extends Migration
     public function up()
     {
         
-        Schema::table('quanan', function (Blueprint $table) {
-            $table->foreign('Id_Ddanh')->references('Id_Ddanh')->on('diadanh');
+        Schema::table('quanans', function (Blueprint $table) {
+            $table->foreign('Id_Ddanh')->references('id')->on('diadanhs');
         });
     }
 

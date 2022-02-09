@@ -13,8 +13,8 @@ class Nguoidung extends Migration
      */
     public function up()
     {
-        Schema::create('nguoidung', function (Blueprint $table) {
-            $table->id('Id_Nguoidung');
+        Schema::create('nguoidungs', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Ddanh');
             $table->string('Hoten_Nguoidung');
             $table->string('Email');
@@ -25,7 +25,7 @@ class Nguoidung extends Migration
             $table->integer('Trangthai_Hoten');
             $table->integer('Trangthai_Email');
             $table->integer('Trangthai_Sodienthoai');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiNguoiDung');
             $table->timestamps();
             $table->softDeletes();
 

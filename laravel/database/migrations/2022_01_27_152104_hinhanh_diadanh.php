@@ -14,11 +14,11 @@ class HinhanhDiadanh extends Migration
      */
     public function up()
     {
-        Schema::create('hinhanh_diadanh', function (Blueprint $table) {
-            $table->id('Id_Hinhanh');
+        Schema::create('hinhanh_diadanhs', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Ddanh');
             $table->string('Ten_Hinhanh');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiHinhAnhDD');
             $table->timestamps();
             $table->softDeletes();
         });

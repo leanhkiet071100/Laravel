@@ -13,14 +13,14 @@ class Baiviet extends Migration
      */
     public function up()
     {
-        Schema::create('baiviet', function (Blueprint $table) {
-            $table->id('Id_Baiviet');
+        Schema::create('baiviets', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Nguoidung');
             $table->foreignId('Id_Ddanh');
             $table->longText('Noidung');
             $table->integer('Luotthich');
             $table->dateTime('Ngaygio');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiBaiViet');
             $table->timestamps();
             $table->softDeletes();
         });

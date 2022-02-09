@@ -13,8 +13,8 @@ class Luotxem extends Migration
      */
     public function up()
     {
-        Schema::create('luotxem', function (Blueprint $table) {
-            $table->id('Id_Xem');
+        Schema::create('luotxems', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Nguoidung');
             $table->foreignId('Id_Ddanh');
             $table->boolean('Xem');

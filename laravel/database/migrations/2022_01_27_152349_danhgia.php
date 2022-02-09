@@ -13,8 +13,8 @@ class Danhgia extends Migration
      */
     public function up()
     {
-        Schema::create('danhgia', function (Blueprint $table) {
-            $table->id('Id_Danhgia');
+        Schema::create('danhgias', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Nguoidung');
             $table->foreignId('Id_Ddanh');
             $table->integer('Sodanhgia');

@@ -13,10 +13,10 @@ class Nhucau extends Migration
      */
     public function up()
     {
-        Schema::create('nhucau', function (Blueprint $table) {
-            $table->id('Id_Nhucau');
+        Schema::create('nhucaus', function (Blueprint $table) {
+            $table->id();
             $table->string('Tennhucau');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiNhuCau');
             $table->timestamps();
             $table->softDeletes();
         });

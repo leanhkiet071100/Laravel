@@ -13,14 +13,14 @@ class Noiluutru extends Migration
      */
     public function up()
     {
-        Schema::create('noiluutru', function (Blueprint $table) {
-            $table->id('Id_Noiluutru');
+        Schema::create('noiluutrus', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Ddanh');
             $table->string('Ten_Noiluutru');
             $table->string('Hinh_Noiluutru');
             $table->string('Diachi_Noiluutru');
             $table->string('SDT_Noiluutru');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiNoiLuuTru');
             $table->timestamps();
             $table->softDeletes();
         });

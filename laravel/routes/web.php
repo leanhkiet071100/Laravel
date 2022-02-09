@@ -54,15 +54,18 @@ Route::prefix('NhuCau')->group(function(){
 Route::prefix('QuanAn')->group(function(){
     Route::name('QuanAn.')->group(function(){ 
         Route::get('/', [QuanAnController::class, 'index'])->name("dsQuanAn");
-        Route::get('/ThemQuanAn', function(){
-            return view('QuanAn.ThemQuanAn');
-        })->name("ThemQuanAn");
+        Route::get('/ThemQuanAn', [QuanAnController::class, 'create'])->name("ThemQuanAn");
+        Route::post('/ThemQuanAn', [QuanAnController::class, 'store'])->name("ThemQuanAnPost");
+
         Route::get('/SuaQuanAn', function(){
             return view('QuanAn.SuaQuanAn');
         })->name("SuaQuanAn");
         Route::get('/MonAn', [MonanController::class, 'index'])->name("MonAn");
 });
 });
+
+    //Route::resource('QuanAn', QuanAnController::class);
+ 
 
 Route::prefix('NoiLuuTru')->group(function(){
     Route::name('NoiLuuTru.')->group(function(){ 

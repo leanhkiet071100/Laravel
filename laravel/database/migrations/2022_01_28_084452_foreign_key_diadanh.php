@@ -14,10 +14,10 @@ class ForeignKeyDiadanh extends Migration
     public function up()
     {
         
-        Schema::table('diadanh', function (Blueprint $table) {
-            $table->foreign('Id_Nguoidung')->references('Id_Nguoidung')->on('nguoidung');
-            $table->foreign('Id_Nhucau')->references('Id_Nhucau')->on('nhucau');
-            $table->foreign('Id_Mien')->references('Id_Mien')->on('mien');
+        Schema::table('diadanhs', function (Blueprint $table) {
+            $table->foreign('Id_Nguoidung')->references('id')->on('nguoidungs');
+            $table->foreign('Id_Nhucau')->references('id')->on('nhucaus');
+            $table->foreign('Id_Mien')->references('id')->on('miens');
         });
     }
 

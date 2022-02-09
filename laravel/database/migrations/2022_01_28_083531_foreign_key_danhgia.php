@@ -13,9 +13,9 @@ class ForeignKeyDanhgia extends Migration
      */
     public function up()
     {
-        Schema::table('danhgia', function (Blueprint $table) {
-            $table->foreign('Id_Ddanh')->references('Id_Ddanh')->on('diadanh');
-            $table->foreign('Id_Nguoidung')->references('Id_Nguoidung')->on('nguoidung');
+        Schema::table('danhgias', function (Blueprint $table) {
+            $table->foreign('Id_Ddanh')->references('id')->on('diadanhs');
+            $table->foreign('Id_Nguoidung')->references('id')->on('nguoidungs');
         });
     }
 

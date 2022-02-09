@@ -13,8 +13,8 @@ class ForeignKeyNoiluutru extends Migration
      */
     public function up()
     {
-        Schema::table('noiluutru', function (Blueprint $table) {
-            $table->foreign('Id_Ddanh')->references('Id_Ddanh')->on('diadanh');
+        Schema::table('noiluutrus', function (Blueprint $table) {
+            $table->foreign('Id_Ddanh')->references('id')->on('diadanhs');
         });
     }
 

@@ -13,8 +13,8 @@ class ForeignKeyMonan extends Migration
      */
     public function up()
     {
-        Schema::table('monan', function (Blueprint $table) {
-            $table->foreign('Id_Quan')->references('Id_Quan')->on('quanan');
+        Schema::table('monans', function (Blueprint $table) {
+            $table->foreign('Id_Quan')->references('id')->on('quanans');
         });
     }
 

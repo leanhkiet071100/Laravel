@@ -13,8 +13,8 @@ class ForeignKeyNguoidung extends Migration
      */
     public function up()
     {
-        Schema::table('nguoidung', function (Blueprint $table) {
-            $table->foreign('Id_Ddanh')->references('Id_Ddanh')->on('diadanh');
+        Schema::table('nguoidungs', function (Blueprint $table) {
+            $table->foreign('Id_Ddanh')->references('id')->on('diadanhs');
         });
     }
 

@@ -13,10 +13,10 @@ class Mien extends Migration
      */
     public function up()
     {
-        Schema::create('mien', function (Blueprint $table) {
-            $table->id('Id_Mien');
+        Schema::create('miens', function (Blueprint $table) {
+            $table->id();
             $table->string('Ten_Mien');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiMien');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,5 +19,9 @@ class Diadanh extends Model
     public function nhucau(){
        return $this->belongsTo(Nguoidung::class, );
    }
+
+   public function quanan(){
+       return $this->hasMany(Quanan::class, 'Id_Ddanh', 'Id_Ddanh');
+   }
 }
     

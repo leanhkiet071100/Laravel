@@ -13,8 +13,8 @@ class ForeignKeyHinhanhbaiviet extends Migration
      */
     public function up()
     {
-        Schema::table('hinhanh_baiviet', function (Blueprint $table) {
-            $table->foreign('Id_Baiviet')->references('Id_Baiviet')->on('baiviet');
+        Schema::table('hinhanh_baiviets', function (Blueprint $table) {
+            $table->foreign('Id_Baiviet')->references('id')->on('baiviets');
         });
         
     }

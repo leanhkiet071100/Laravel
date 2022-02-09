@@ -13,8 +13,8 @@ class Diadanh extends Migration
      */
     public function up()
     {
-        Schema::create('diadanh', function (Blueprint $table) {
-            $table->id('Id_Ddanh');
+        Schema::create('diadanhs', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Nhucau');
             $table->foreignId('Id_Mien');
             $table->foreignId('Id_Nguoidung');
@@ -27,7 +27,7 @@ class Diadanh extends Migration
             $table->longText('Tainghuyen');
             $table->integer('Kinhdo');
             $table->integer('Vido');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiDiaDanh');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -14,8 +14,8 @@ class Luotthich extends Migration
      */
     public function up()
     {
-        Schema::create('luotthich', function (Blueprint $table) {
-            $table->id('Id_Thich');
+        Schema::create('luotthichs', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Nguoidung');
             $table->foreignId('Id_Ddanh');
             $table->boolean('Thich');

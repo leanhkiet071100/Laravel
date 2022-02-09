@@ -14,13 +14,13 @@ class Monan extends Migration
      */
     public function up()
     {
-        Schema::create('monan', function (Blueprint $table) {
-            $table->id('Id_Mon');
+        Schema::create('monans', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('Id_Quan');
             $table->string('Ten_Mon');
             $table->string('Hinh_Mon');
             $table->string('Gia_ban');
-            $table->integer('Trangthai');
+            $table->integer('TrangThaiMonAn');
             $table->timestamps();
             $table->softDeletes();
         });

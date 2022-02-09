@@ -43,7 +43,7 @@
         <h6>Danh sách quán ăn</h6>
           </div>
           <div class="col-6 align-middle text-end">
-            <a href="{{route('QuanAn.ThemQuanAn')}}" class="text-end" style="color: blue"> Thêm quán ăn</a>
+            <a href="{{route('QuanAn.ThemQuanAn')}}" class="text-end" style="color: blue"> Thêm quán ăn</a> 
           </div>
       </div>
             <div class="card-body px-0 pt-0 pb-2">
