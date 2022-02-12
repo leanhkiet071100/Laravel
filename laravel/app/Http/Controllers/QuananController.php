@@ -30,12 +30,21 @@ class QuanAnController extends Controller
         }
     public function index()
     {
-       //$lsquanan1 = DB::table('quanans')->select('quanans.Ten_Quan', 'quanans.Hinh_Quan', 'quanans.Diachi_Quan', 'quanans.SDT_Quan', 'quanans.TrangThaiQuanAn', 'diadanhs.Ten_Ddanh') ->join('diadanhs', 'quanans.Id_Ddanh', '=', 'diadanhs.id')->get();
-        $lsquanan = Quanan::all();
+        // load toàn bộ danh sách
+        // $lsquanan = Quanan::all();
+        // foreach ($lsquanan as $quanans) {
+        //     $this->fixImage($quanans);
+        // }
+
+
+        // phân trang
+        $lsquanan = Quanan::simplePaginate(5);
         foreach ($lsquanan as $quanans) {
             $this->fixImage($quanans);
         }
-        $lsDiaDanh = DB::table('diadanhs')->get();
+        
+        $lsDiaDanh = DiaDanh::all();
+       
         return View('QuanAn.QuanAn',['lsquanan' => $lsquanan, 'lsDiaDanh' => $lsDiaDanh]);
     } 
 
@@ -166,6 +175,5 @@ class QuanAnController extends Controller
     {
         $quanan = Quanan::find($id);
         $quanan->delete();
-        return Redirect::route('QuanAn.dsQuanAn')->with('success', 'Xóa thành công');
     }
 }

@@ -101,13 +101,20 @@
                       <td class="align-middle text-end">
                           <a href="{{route('QuanAn.SuaQuanAn', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
                           <a href="{{route('QuanAn.MonAn')}}"><button type="button" class="btn btn-warning">Món ăn</button></a>
-                          <a onclick="return confirm('bạn có chắc muốn quán {{$value->Ten_Quan}} xoá')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
+                          <a onclick="return confirm('bạn có chắc muốn xoá quán {{$value->Ten_Quan}} ')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
                     @endforeach
                   </tbody>
+                  
                 </table>
+                    
+               
               </div>
+           
+            </div>
+           <div class="container text-center my-5" >
+                      {{$lsquanan->links()}}
             </div>
 @endsection
 
