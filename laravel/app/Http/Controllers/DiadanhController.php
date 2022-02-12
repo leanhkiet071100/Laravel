@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Diadanh;
 use App\Models\Nguoidung;
+use App\Models\NhuCau;
+use App\Models\Mien;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\storeDiadanhRequest;
-use App\Http\Requests\UpdateDiadanhRequest;
+use App\Http\Requests\DiaDanhRequest;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
-class DiadanhController extends Controller
+class DiaDanhController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,9 +31,11 @@ class DiadanhController extends Controller
 
     public function index()
     {
-        $lsdiadanh = DB::table('diadanh')->select('diadanh.Ten_Ddanh','nguoidungs.Hoten_Nguoidung', 'diadanh.Trangthai' )->join('nguoidungs', 'diadanh.Id_Nguoidung', '=','nguoidungs.Id_Nguoidung')->get();
-
-        return View('DiaDanh.dsDiaDanh',['lsdiadanh' => $lsdiadanh]);
+        $lsdiadanh = Diadanh::Paginate(5);
+     
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau]);
     }
 
     /**
@@ -38,9 +44,39 @@ class DiadanhController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+      public function create()
     {
-        //
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return View('DiaDanh.ThemDiaDanh',['NhuCau' => $NhuCau, 'Mien' => $Mien]);
+    }
+
+    public function store(DiaDanhRequest $request)
+    {
+        $DiaDanh =new Diadanh();
+        $DiaDanh->fill([
+            'Ten_Ddanh'=>$request->input('TenDiaDanh'),
+            'Ten_Goikhac'=>$request->has('TenGoiKhac') ? $request->input('TenGoiKhac') : 'không có',
+            'Diachi_Ddanh'=>$request->input('DiaChi'),
+            'Canhvat'=>$request->input('CanhVat'),
+            'khihau'=>$request->input('KhiHau'),
+            'Tainguyen'=>$request->input('TaiNguyen'),
+            'Kinhdo'=>$request->input('KinhDo'),
+            'Vido'=>$request->input('ViDo'),
+            'Id_Mien'=>$request->input('Mien'),
+            'Id_Nguoidung'=>3,
+            'Id_Nhucau'=>$request->input('NhuCau'),
+    
+            'TrangThaiDiaDanh'=>1,
+        ]);
+        $DiaDanh->save();
+        
+        // if($request->hasFile('hinh')){
+        //     $DiaDanh->hinh = $request->file('hinh')->store('img/'.$DiaDanh->id,'public');
+        // }
+        $DiaDanh->save();
+        return Redirect::route('DiaDanh.ChiTietDiaDanh',['id'=>$DiaDanh->id]);
     }
 
     /**
@@ -51,7 +87,13 @@ class DiadanhController extends Controller
      */
     public function show($id)
     {
-        
+        // $this->fixImage($DiaDanh);
+        // $LuotXem = DB::table('luotxems')->Where('Id_Ddanh', '=', $DiaDanh->id )->count();
+        $DiaDanh = Diadanh::find($id);
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return View('DiaDanh.ChiTietDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien]);
+    
     }
 
     /**
@@ -61,8 +103,68 @@ class DiadanhController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function edit($id)
     {
+        $DiaDanh =  DB::table('diadanhs')->where('diadanhs.id', '=', $id)->first();
+
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return view('DiaDanh.SuaDiaDanh',['NhuCau' => $NhuCau, 'Mien' => $Mien, 'DiaDanh' => $DiaDanh]);
+    }
+
+    public function update(DiaDanhRequest $request, $id)
+    {
+        // $rule = [
+        //     'TenDiaDanh' => 'required|min:3|max:100',
+        //     'DiaChi' => 'required|min:3|max:100',
+        //     //'TenGoiKhac' => 'required',
+        //     'CanhVat' => 'required|min:3|max:100',
+        //     'KhiHau' => 'required',
+        //     'TaiNguyen' => 'required',
+        //     'NhuCau' => 'required',
+        //     'KinhDo' => 'required|numeric',
+        //     'ViDo' => 'required',
+        // ];
+        // $messiage = [
+        //       'required' => ':attribute không được để trống',
+        //         'min' => ':attribute không được nhỏ hơn :min',
+        //         'max' => ':attribute không được lớn hơn :max',
+        //         'numeric' => ':attribute phải là số',
+        //         'NhuCau.required' => "Vui lòng chọn lựa nhu cầu",
+        // ];
+        // $attributes =[
+        //     'TenDiaDanh' => 'Tên địa danh',
+        //     'DiaChi' => 'Địa chỉ',
+        //     'TenGoiKhac' => 'Tên gọi khác',
+        //     'CanhVat' => 'Cảnh vật',
+        //     'KhiHau' => 'Khí hậu',
+        //     'TaiNguyen' => 'Tài nguyên',
+        //     'NhuCau' => 'Nhu cầU',
+        //     'KinhDo' => 'Kinh độ',
+        //     'viDo' => 'Vĩ đọ',
+        // ];
+        //  $request->validate($rule, $messiage, $attributes);
+        $DiaDanh =  Diadanh::find($id);
+        $DiaDanh->fill([
+            'Ten_Ddanh'=>$request->input('TenDiaDanh'),
+            'Ten_Goikhac'=>$request->has('TenGoiKhac') ? $request->input('TenGoiKhac') : 'không có',
+            'Diachi_Ddanh'=>$request->input('DiaChi'),
+            'Canhvat'=>$request->input('CanhVat'),
+            'khihau'=>$request->input('KhiHau'),
+            'Tainguyen'=>$request->input('TaiNguyen'),
+            'Kinhdo'=>$request->input('KinhDo'),
+            'Vido'=>$request->input('ViDo'),
+            'Id_Mien'=>$request->input('Mien'),
+            'Id_Nguoidung'=>3,
+            'Id_Nhucau'=>$request->input('NhuCau'),
+    
+            'TrangThaiDiaDanh'=>1,
+        ]);
+        $DiaDanh->save();
+        return Redirect::route('DiaDanh.ChiTietDiaDanh',['id'=>$DiaDanh->id])->with('success','Sửa thành công');
+    
+    
         //
     }
 
@@ -74,6 +176,9 @@ class DiadanhController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $DiaDanh = DB::table('diadanhs')->where('diadanhs.id', '=', $id)->first();
+        $DiaDanh->delete();
+        return Redirect::route('DiaDanh.dsDiaDanh')->with('success','Xóa thành công');
     }
+  
 }

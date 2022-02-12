@@ -1,17 +1,4 @@
-@extends('layouts.app')
-
-
-@section('CSS')
-         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-        <!-- Nucleo Icons -->
-        <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
-        <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
-        <!-- Font Awesome Icons -->
-        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-        <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
-        <!-- CSS Files -->
-        <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
-@endsection
+@extends('layouts.appSua')
 
 
 @section('title', 'địa danh')
@@ -27,21 +14,21 @@
     @method('PATCH')
 <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">Tên quán ăn</label>
-    <input type="text" class="form-control" placeholder="Tên quán ăn"  name="tenquanan" value= "{{$quanan->Ten_Quan}}">
+    <input type="text" class="form-control" placeholder="Tên quán ăn"  name="tenquanan" value= "{{ old('tenquanan') ?? $quanan->Ten_Quan}}">
        @error('tenquanan')
         <span style="color:red"> {{$message}}</span>
       @enderror
 </div>
 <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">Số điện thoại</label>
-  <input type="text" class="form-control" placeholder="Số điện thoại"  name="sdt" value="{{$quanan->SDT_Quan}}">
+  <input type="text" class="form-control" placeholder="Số điện thoại"  name="sdt" value="{{ old('sdt') ??$quanan->SDT_Quan}}">
   @error('sdt')
         <span style="color:red"> {{$message}}</span>
       @enderror
 </div>
 <div class="mb-3">
   <label for="exampleFormControlTextarea1" class="form-label">Địa chỉ quán ăn</label>
-  <textarea class="form-control" rows="3" name="diachiquanan">{{$quanan->Diachi_Quan}} </textarea>
+  <textarea class="form-control" rows="3" name="diachiquanan">{{ old('diachiquanan') ??$quanan->Diachi_Quan}} </textarea>
       @error('diachiquanan')
         <span style="color:red"> {{$message}}</span>
       @enderror

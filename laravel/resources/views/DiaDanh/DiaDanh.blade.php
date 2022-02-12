@@ -3,7 +3,7 @@
 @section('title', 'địa danh')
 
 @section('TT')
-    Quán ăn
+    Danh sách địa danh
 @endsection
 
 @section('sidebar')
@@ -13,16 +13,11 @@
     <div class="row align-items-start">
         <div class="col-4">
            <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Tên quán ăn</label>
-            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên quán ăn">
-          </div>
-        </div>
-        <div class="col-3">
-             <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Tên địa danh</label>
-            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh">
+            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh" name="TenDiaDanh">
           </div>
         </div>
+     
         <div class="col-2 my-4">
             <button type="button" class="btn btn-success">Tìm kiếm</button>
 </div>
@@ -31,10 +26,10 @@
     <div class="card-header pb-0">
                <div class="row align-items-start">
         <div class="col-6">
-        <h6>Danh sách quán ăn</h6>
+        <h6>Danh sách đia danh</h6>
           </div>
           <div class="col-6 align-middle text-end">
-            <a href="{{route('QuanAn.ThemQuanAn')}}" class="text-end" style="color: blue"> Thêm quán ăn</a> 
+            <a href="{{route('DiaDanh.ThemDiaDanh')}}" class="text-end" style="color: blue"> Thêm đia danh</a> 
           </div>
       </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -43,43 +38,38 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hình</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên quán ăn</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ quán</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Số điện thoại quán</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa danh</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên địa danh</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Người đăng</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chức năng</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($lsquanan as $value)
+                    @foreach($lsdiadanh as $value)
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="{{$value->Hinh_Quan}}" class="avatar avatar-sm me-3" alt="user1">
+                            <img src="" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                        
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{$value->Ten_Quan}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{$value->Ten_Ddanh}}</p>
                     
                       </td>
                     
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$value->Diachi_Quan}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Diachi_Ddanh}}</span>
                       </td>
                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{$value->SDT_Quan}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Hoten_Nguoidung}}</span>
                       </td>
-                      <td class="align-middle text-center">
-                        @foreach($lsDiaDanh as $valueDD)
-                        <span class="text-secondary text-xs font-weight-bold">@if($value->Id_Ddanh==$valueDD->id) {{$valueDD->Ten_Ddanh}}   @endif</span>
-                        @endforeach
-                      </td>
+                
                     
-                      @if($value->TrangThaiQuanAn  == 1)
+                      @if($value->TrangThaiDiaDanh  == 1)
                           <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
                       </td>
@@ -90,9 +80,9 @@
                       @endif
                      
                       <td class="align-middle text-end">
-                          <a href="{{route('QuanAn.SuaQuanAn', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
-                          <a href="{{route('QuanAn.MonAn')}}"><button type="button" class="btn btn-warning">Món ăn</button></a>
-                          <a onclick="return confirm('bạn có chắc muốn xoá quán {{$value->Ten_Quan}} ')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
+                          <a href="{{route('DiaDanh.SuaDiaDanh', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
+                          <a href="{{route('DiaDanh.ChiTietDiaDanh', ['id'=>$value->id])}}"><button type="button" class="btn btn-warning">Chi tiết</button></a>
+                          <a onclick="return confirm('bạn có chắc muốn xoá quán {{$value->Ten_Ddanh}} ')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
                     @endforeach
@@ -105,7 +95,7 @@
            
             </div>
            <div class="container text-center my-5" >
-                {{$lsquanan->links()}}
+                {{$lsdiadanh->links()}}
             </div>
 @endsection
 

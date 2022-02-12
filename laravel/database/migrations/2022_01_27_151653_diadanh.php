@@ -20,13 +20,13 @@ class Diadanh extends Migration
             $table->foreignId('Id_Nguoidung');
             $table->string('Ten_Ddanh');
             $table->string('Ten_Goikhac');
-            $table->string('Mota');
+     
             $table->string('Diachi_Ddanh');
             $table->longText('Canhvat');
             $table->longText('Khihau');
             $table->longText('Tainghuyen');
-            $table->integer('Kinhdo');
-            $table->integer('Vido');
+            $table->string('Kinhdo');
+            $table->string('Vido');
             $table->integer('TrangThaiDiaDanh');
             $table->timestamps();
             $table->softDeletes();

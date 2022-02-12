@@ -77,16 +77,16 @@
   <label for="exampleFormControlTextarea1" class="form-label">Giá món ăn</label>
 
 <div class="input-group mb-3">
-<span class="input-group-text">VNĐ</span>
-<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <span class="input-group-text">VNĐ</span>
+  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+    </div>
   </div>
-</div>
 
 
-<div class="mb-3">
-  <label for="formFile" class="form-label">Hình</label>
-  <input class="form-control" type="file" id="formFile">
-</div>
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Hình</label>
+    <input class="form-control" type="file" id="formFile">
+  </div>
 </div>
 
 <div  class="align-middle text-end" > 

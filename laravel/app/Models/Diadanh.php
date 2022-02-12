@@ -13,15 +13,21 @@ class Diadanh extends Model
    
        
     protected $guarded = [];
+    protected $table = 'diadanhs';
    public function nguoidung(){
        return $this->belongsToMany(Nguoidung::class, );
    }
+
     public function nhucau(){
        return $this->belongsTo(Nguoidung::class, );
    }
 
    public function quanan(){
        return $this->hasMany(Quanan::class, 'Id_Ddanh', 'id');
+   }
+
+    public function mien(){
+         return $this->belongsTo(Mien::class, 'Id_Mien', 'id');
    }
 }
     

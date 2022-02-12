@@ -29,20 +29,18 @@ Route::get('/Dashboard', function(){
 
 Route::prefix('DiaDanh')->group(function(){
     Route::name('DiaDanh.')->group(function(){ 
-        Route::get('/', [DiadanhController::class, 'index'])->name('dsDiaDanh');
-    
-    Route::get('/Sua', function(){
-        return view('DiaDanh.SuaDiaDanh');
-    })->name('SuaDiaDanh');
-    Route::get('/ChiTiet.html', function(){
-        return view('DiaDanh.ChiTietDiaDanh');
-    })->name('ChiTietDiaDanh');
-    Route::get('/ThemDiaDanh', function(){
-        return view('DiaDanh.ThemDiaDanh');
-    })->name('ThemDiaDanh');
+        Route::get('/', [DiaDanhController::class, 'index'])->name('dsDiaDanh');
+        Route::get('/Sua/{id}', [DiaDanhController::class, 'edit'])->name('SuaDiaDanh');
+        Route::patch('/Sua/{id}', [DiaDanhController::class, 'update'])->name('SuaDiaDanhpatch');
+        Route::get('/ChiTietDiaDanh/{id}', [DiaDanhController::class, 'show'])->name('ChiTietDiaDanh');
+        Route::get('/ThemDiaDanh', [DiaDanhController::class, 'create'])->name('ThemDiaDanh');
+        Route::post('/ThemDiaDanh', [DiaDanhController::class, 'store'])->name('ThemDiaDanhPost');
+        Route::get('/XoaDiaDanh/{id}', [DiaDanhController::class, 'destroy'])->name('XoaDiaDanh');
 });
   
 });
+
+//Route::resource('DiaDanh',DiaDanhController::class);
 
 Route::prefix('NhuCau')->group(function(){
     Route::name('NhuCau.')->group(function(){ 
@@ -56,10 +54,9 @@ Route::prefix('QuanAn')->group(function(){
         Route::get('/', [QuanAnController::class, 'index'])->name("dsQuanAn");
         Route::get('/ThemQuanAn', [QuanAnController::class, 'create'])->name("ThemQuanAn");
         Route::post('/ThemQuanAn', [QuanAnController::class, 'store'])->name("ThemQuanAnPost");
-
         Route::get('/SuaQuanAn/{id}', [QuanAnController::class, 'edit'])->name("SuaQuanAn");
         Route::patch('/SuaQuanAn/{id}', [QuanAnController::class, 'update'])->name("SuaQuanAnPost");
-         Route::get('/XoaQuanAn/{id}', [QuanAnController::class, 'destroy'])->name("XoaQuanAn");
+        Route::get('/XoaQuanAn/{id}', [QuanAnController::class, 'destroy'])->name("XoaQuanAn");
         Route::get('/MonAn', [MonanController::class, 'index'])->name("MonAn");
 });
 });
@@ -78,7 +75,7 @@ Route::prefix('DuyetDiaDanh')->group(function(){
     Route::name('DuyetDiaDanh.')->group(function(){ 
         Route::get('/', function(){
             return view('DuyetDiaDanh.DuyetDiaDanh');
-        })->name("dsDuyetDiadanh");
+        })->name("dsDuyetDiaDanh");
 });
 });
 
