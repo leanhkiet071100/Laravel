@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appSua')
 
 @section('title', 'Đồng Nai')
 
@@ -16,13 +16,13 @@
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../assets/img/team-3.jpg" height="550" width="1200">
+                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/img/team-3.jpg" height="550" width="1200">
+                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/img/team-3.jpg" height="550" width="1200">
+                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -41,42 +41,48 @@
     <div class="col-6">
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Tên sản phẩm: </b></span>Long Thành - Dầu Dây
+                <span><b>Tên Địa danh: </b></span>{{$DiaDanh->Ten_Ddanh}}
             </div>
         </div>
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Tên gọi khác: </b></span>Không có
+                <span><b>Tên gọi khác: </b></span>
+                @if($DiaDanh->Ten_GoiKhac == null)
+                    {{'Không có'}}
+                @else
+                    {{$DiaDanh->Ten_GoiKhac}}
+                @endif
+              
             </div>
         </div> 
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Địa chỉ: </b></span>Quốc lộ 50, Long Thành - Dầu Dây, tỉnh Đồng Nai
+                <span><b>Địa chỉ: </b></span>{{$DiaDanh->Diachi_Ddanh}}
             </div>
         </div> 
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Cảnh vật: </b></span>Không có
+                <span><b>Cảnh vật: </b></span>{{$DiaDanh->Canhvat}}
             </div>
         </div> 
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Khí hậu: </b></span>Hai mùa (Khô, mưa)
+                <span><b>Khí hậu: </b></span>{{$DiaDanh->Khihau}}
             </div>
         </div>  
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Tài nguyên: </b></span>BÊ ĐÊ dê gái Lê Anh Kiệt
+                <span><b>Tài nguyên: </b></span>{{$DiaDanh->Tainguyen}}
             </div>
         </div>
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Kinh độ: </b></span>9.312313
+                <span><b>Kinh độ: </b></span>{{$DiaDanh->Kinhdo}}
             </div>
         </div>
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
-                <span><b>Vĩ độ: </b></span>105.3213165
+                <span><b>Vĩ độ: </b></span>{{$DiaDanh->Vido}}
             </div>
         </div>
     </div>
@@ -96,12 +102,16 @@
         <div style="margin-top:20px">
             <div class="container-fliud text-dark">
                 <span><b>Nhu cầu: </b></span>
-                <div>
-                    <span title="Đi phượ7">Đi phượt,</span>
-                    <span title="Cắm trại">Cắm trại,</span>
-                    <span title="Nhà nghỉ">Nhà nghỉ,</span>
-                    <span title="Khách sạn">Khách sạn</span>
-                </div>                       
+                @foreach($NhuCau as $n)
+                    @if($DiaDanh->Id_Nhucau == $n->id)
+                        <span>
+                            {{$n->Tennhucau}}
+                        </span>
+
+                    @endif
+                    
+                @endforeach
+                                   
             </div>
         </div>
         <div style="margin-top:20px">
@@ -117,7 +127,7 @@
 </div>
 <div style="margin-top:20px">
     <div class="align-middle text-end">
-        <button type="button" class="btn btn-outline-success ">Sữa</button>
+        <button type="submit" class="btn btn-outline-success ">Sửa</button>
         <button type="button" class="btn btn-outline-danger">Xóa</button>
         <button type="button" class="btn btn-outline-primary">Hủy</button>
     </div>

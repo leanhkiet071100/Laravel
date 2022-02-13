@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\resources",
+    "\\resources\\views",
+    "\\resources\\views\\DiaDanh",
+    "\\routes",
+    "\\storage"
+  ],
+  "SelectedNode": "\\resources\\views\\DiaDanh\\dsDiaDanh.blade.php",
+  "PreviewInSolutionExplorer": false
+}

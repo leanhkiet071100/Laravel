@@ -1,4 +1,6 @@
-@extends('layouts.app')
+
+  @extends('layouts.appSua')
+
 
 @section('title', 'Nhu cầu')
 
@@ -8,18 +10,48 @@
 
 @section('sidebar')
     @parent
-<form action="" method="Post">
-  <div class="row col-4">
-    <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Tên nhu cầu</label>
-  <input type="text" class="form-control" id="NhuCau" placeholder="Tên nhu cầu">
-</div>
-</div>
 
-  <button type="button" class="btn btn-outline-primary my-2">Lưu/ Thêm</button>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+    @endif
 
-    
-</form>
+    @if($nhucau == null )
+    <form action="{{route('NhuCau.ThemNhuCauPost')}}" method="Post"  enctype="multipart/form-data">
+      @csrf
+     
+          <div class="row col-4">
+            <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Tên nhu cầu</label>
+          <input type="text" class="form-control"  placeholder="Tên nhu cầu" name="TenNhuCau" value="{{old('TenNhuCau')}}">
+          @error('TenNhuCau')
+            <span style="color:red"> {{$message}}</span>
+          @enderror
+        </div>
+        </div>
+
+          <button type="submit" class="btn btn-outline-primary my-2">Thêm</button>
+
+        
+    </form>
+    @else
+      <form action="{{route('NhuCau.SuaNhuCauPatch', ['id'=> $nhucau->id])}}" method="Post"  enctype="multipart/form-data">
+      @csrf
+      @method('PATCH')
+        <div class="row col-4">
+          <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Tên nhu cầu</label>
+        <input type="text" class="form-control"  placeholder="Tên nhu cầu" name="TenNhuCau" value="{{old('TenNhuCau') ?? $nhucau->Tennhucau}}">
+        @error('TenNhuCau')
+          <span style="color:red"> {{$message}}</span>
+        @enderror
+      </div>
+      </div>
+        <button type="submit" class="btn btn-outline-primary my-2">Lưu</button>
+      </form>
+    @endif
+
 
     <div class="card-header pb-0">
               <h6>Danh sách nhu cầu</h6>
@@ -31,34 +63,26 @@
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên nhu cầu</th>
+                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($lsnhucau as $key => $value)
                     <tr>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">1</span>
+                        <span class="badge badge-sm bg-gradient-success">{{$key+1}}</span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Đi phượt</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{$value->Tennhucau}}</span>
                       </td>
                       <td class="align-middle text-end">
-                      <button type="button" class="btn btn-success">Sửa</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
+                      <a href="{{route('NhuCau.SuaNhuCau', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
+                      <a onclick="return confirm('bạn có chắc muốn xoá  {{$value->Tennhucau}} ')" href="{{route('NhuCau.XoaNhuCau',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">2</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Cắm trại</span>
-                      </td>
-                      <td class="align-middle text-end">
-                      <button type="button" class="btn btn-success">Sửa</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
-                      </td>
-                    </tr>
+                    @endforeach
+                    
                   </tbody>
                 </table>
               </div>
