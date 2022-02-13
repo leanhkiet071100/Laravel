@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Diadanh;
 use App\Models\NhuCau;
+
 use Illuminate\Http\Request;
+use App\Http\Requests\NhuCauRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class NhuCauController extends Controller
 {
-      public function index()
+      public function index($id=0)
     {
-        $lsnhucau = DB::table('nhucau')->get();
-
-        return View('NhuCau.NhuCau',['lsnhucau' => $lsnhucau]);
+        
+            $nhucau = nhucau::find($id);
+            $lsnhucau = NhuCau::all();
+        
+            return View('NhuCau.NhuCau',['lsnhucau' => $lsnhucau, 'nhucau' => $nhucau]);
     }
 
     /**
@@ -22,9 +27,20 @@ class NhuCauController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+     public function create()
     {
-        //
+        
+    }
+
+    public function store(NhuCauRequest $request)
+    {
+        $NhuCau = new NhuCau;
+        $NhuCau->fill([
+            'Tennhucau'=>$request->input('TenNhuCau'),
+            'TrangThaiNhuCau'=>1,
+        ]);
+        $NhuCau->save();
+        return redirect()->route('NhuCau.dsNhuCau')->with('success','Thêm nhu cầu thành công');
     }
 
     /**
@@ -45,9 +61,15 @@ class NhuCauController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NhuCauRequest $request, $id)
     {
-        //
+        $NhuCau = NhuCau::find($id);
+        $NhuCau->fill([
+            'Tennhucau'=>$request->input('TenNhuCau'),
+            'TrangThaiNhuCau'=>1,
+        ]);
+        $NhuCau->save();
+        return redirect()->route('NhuCau.dsNhuCau')->with('success','Sửa nhu cầu thành công');
     }
 
     /**
@@ -58,6 +80,8 @@ class NhuCauController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $NhuCau = NhuCau::find($id);
+        $NhuCau->delete();
+        return redirect()->route('NhuCau.dsNhuCau')->with('success','Xóa thành công');
     }
 }

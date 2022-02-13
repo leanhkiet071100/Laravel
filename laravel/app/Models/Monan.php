@@ -10,6 +10,7 @@ class Monan extends Model
     use HasFactory;
     use softDeletes;
     
+    protected $table = 'monans';
     public function quanan(){
         return $this->belongsTo('App\Models\Quanan', 'Id_Quanan', 'id');
     }

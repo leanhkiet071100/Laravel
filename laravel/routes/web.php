@@ -45,6 +45,11 @@ Route::prefix('DiaDanh')->group(function(){
 Route::prefix('NhuCau')->group(function(){
     Route::name('NhuCau.')->group(function(){ 
         Route::get('/', [NhuCauController::class, 'index'])->name("dsNhuCau");
+        Route::get('/ThemNhuCau', [NhuCauController::class, 'create'])->name("ThemNhuCau");
+        Route::post('/ThemNhuCau', [NhuCauController::class, 'store'])->name("ThemNhuCauPost");
+        Route::get('/SuaNhuCau/{id}', [NhuCauController::class, 'index'])->name("SuaNhuCau");
+        Route::patch('/SuaNhuCau/{id}', [NhuCauController::class, 'update'])->name("SuaNhuCauPatch");
+        Route::get('/XoaNhuCau/{id}', [NhuCauController::class, 'destroy'])->name("XoaNhuCau");
 });
    
 });
@@ -57,7 +62,7 @@ Route::prefix('QuanAn')->group(function(){
         Route::get('/SuaQuanAn/{id}', [QuanAnController::class, 'edit'])->name("SuaQuanAn");
         Route::patch('/SuaQuanAn/{id}', [QuanAnController::class, 'update'])->name("SuaQuanAnPost");
         Route::get('/XoaQuanAn/{id}', [QuanAnController::class, 'destroy'])->name("XoaQuanAn");
-        Route::get('/MonAn', [MonanController::class, 'index'])->name("MonAn");
+        Route::get('/MonAn/{id}', [MonanController::class, 'index'])->name("MonAn");
 });
 });
 
@@ -67,6 +72,11 @@ Route::prefix('QuanAn')->group(function(){
 Route::prefix('NoiLuuTru')->group(function(){
     Route::name('NoiLuuTru.')->group(function(){ 
         Route::get('/',[NoiluutruController::class, 'index'])->name("dsNoiLuuTru");
+        Route::get('/ThemNoiLuuTru', [NoiluutruController::class, 'create'])->name("ThemNoiLuuTru");
+        Route::post('/ThemNoiLuuTru', [NoiluutruController::class, 'store'])->name("ThemNoiLuuTruPost");
+        Route::get('/SuaNoiLuuTru/{id}', [NoiluutruController::class, 'index'])->name("SuaNoiLuuTru");
+        Route::patch('/SuaNoiLuuTru/{id}', [NoiluutruController::class, 'update'])->name("SuaNoiLuuTruPatch");
+        Route::get('/XoaNoiLuuTru/{id}', [NoiluutruController::class, 'destroy'])->name("XoaNoiLuuTru");
 });
 });
 

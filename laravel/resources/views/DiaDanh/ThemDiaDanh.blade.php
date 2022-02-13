@@ -10,7 +10,6 @@
         @parent
 <form action="{{route('DiaDanh.ThemDiaDanhPost')}}" method="Post"  enctype="multipart/form-data">
     @csrf
-
     <div class="container">
         <div class="row">
             <div class="col-4">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Monan;
+use App\Models\Quanan;
 use Illuminate\Support\Facades\DB;
 
 class MonanController extends Controller
@@ -13,11 +14,11 @@ class MonanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $lsmonan =  DB::table('monan')->where('monan.Id_Quan', 1)->join('quanan', 'monan.Id_Quan', '=', 'quanan.Id_Quan')->get();
-        $quanan = DB::table('quanan')->where('quanan.Id_Quan', 1)->get();
-        return view('QuanAn.MonAn',['lsmonan' => $lsmonan, 'quanan' => $quanan]);
+        $lsmonan = Monan::where('Id_Quanan', $id)->get();
+        $quanan =  Quanan::find($id);
+        return view('MonAn.MonAn',['lsmonan' => $lsmonan, 'quanan' => $quanan]);
     }
 
     /**

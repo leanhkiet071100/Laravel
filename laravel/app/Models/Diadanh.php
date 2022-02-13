@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Diadanh extends Model
 {
     use HasFactory;
-       use SoftDeletes;
+    use SoftDeletes;
    
        
     protected $guarded = [];
     protected $table = 'diadanhs';
+    
    public function nguoidung(){
        return $this->belongsToMany(Nguoidung::class, );
    }
@@ -28,6 +29,10 @@ class Diadanh extends Model
 
     public function mien(){
          return $this->belongsTo(Mien::class, 'Id_Mien', 'id');
+   }
+   
+   public function noiluutru(){
+         return $this->hasMany(Noiluutru::class, 'Id_Ddanh', 'id');
    }
 }
     

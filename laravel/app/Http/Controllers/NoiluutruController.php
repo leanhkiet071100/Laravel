@@ -2,16 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Noiluutru;
+use App\Models\Diadanh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;  
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\NoiLuuTruRequest;
 
 class NoiluutruController extends Controller
 {
-       public function index()
+
+     protected function fixImage(Noiluutru $noiluutru)
+        {
+            if(Storage::disk('public')->exists($noiluutru->Hinh_Noiluutru)){
+                 $noiluutru->Hinh_Noiluutru = Storage::url( $noiluutru->Hinh_Noiluutru);
+            }else {
+                 $noiluutru->Hinh_Noiluutru = '/img/no_img.png';
+            }
+        }
+
+    public function index($id=0)
     {
-        $lsnoiluutru = DB::table('noiluutru')->select('noiluutru.Ten_Noiluutru', 'noiluutru.Hinh_Noiluutru', 'noiluutru.Diachi_Noiluutru', 'noiluutru.SDT_Noiluutru', 'noiluutru.Trangthai','diadanh.Ten_Ddanh') ->join('diadanh', 'noiluutru.Id_Ddanh', '=', 'diadanh.Id_Ddanh')->get();
-        $diadanh = DB::table('diadanh')->get();
-        return view('NoiLuuTru.NoiLuuTru',['lsnoiluutru' => $lsnoiluutru, 'diadanh' => $diadanh]);
+        $lsnoiluutru = Noiluutru::simplePaginate(5);
+        foreach ($lsnoiluutru as $noiluutru) {
+            $this->fixImage($noiluutru);
+        }
+        $lsnoiluutru1 = Noiluutru::find($id);
+
+        $lsdiadanh = Diadanh::all();
+        return view('NoiLuutru.NoiLuutru',['lsnoiluutru' => $lsnoiluutru, 'lsdiadanh' => $lsdiadanh, 'lsnoiluutru1' => $lsnoiluutru1]);
 
     }
 
@@ -21,9 +40,32 @@ class NoiluutruController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function create()
     {
-        //
+        
+    }
+
+    public function store(NoiLuuTruRequest $request)
+    {
+        $noiluutru = new Noiluutru;
+        
+        $noiluutru->fill([
+            'Ten_Noiluutru'=>$request->input('TenNoiLuuTru'),
+            'Diachi_Noiluutru'=>$request->input('DiaChiNoiLuuTru'),
+            'SDT_Noiluutru'=>$request->input('SDTNoiLuuTru'),
+            'Hinh_Noiluutru'=>'',
+            'Id_Ddanh' => $request->input('DiaDanh'),
+            'TrangThaiNoiLuuTru'=>1,
+        ]);
+
+        $noiluutru->save();
+        if($request->hasFile('Hinh')){
+            $noiluutru->Hinh_Noiluutru = $request->file('Hinh')->store('img/noiluutru/'.$noiluutru->id,'public');
+        }
+
+        $noiluutru->save();
+        return redirect()->route('NoiLuuTru.dsNoiLuuTru')->with('success','Thêm nhu cầu thành công');
     }
 
     /**
@@ -44,9 +86,23 @@ class NoiluutruController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NoiLuuTruRequest $request, $id)
     {
-        //
+        $noiluutru = Noiluutru::find($id);
+        $noiluutru->fill([
+            'Ten_Noiluutru'=>$request->input('TenNoiLuuTru'),
+            'Diachi_Noiluutru'=>$request->input('DiaChiNoiLuuTru'),
+            'SDT_Noiluutru'=>$request->input('SDTNoiLuuTru'),
+            'Id_Ddanh' => $request->input('DiaDanh'),
+            'TrangThaiNoiLuuTru'=>1,
+        ]);
+
+        if($request->hasFile('Hinh')){
+            $noiluutru->Hinh_Noiluutru = $request->file('Hinh')->store('img/noiluutru/'.$noiluutru->id,'public');
+        }
+
+        $noiluutru->save();
+        return redirect()->route('NoiLuuTru.dsNoiLuuTru')->with('success','Sửa nhu cầu thành công');
     }
 
     /**
@@ -57,6 +113,9 @@ class NoiluutruController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $noiluutru = Noiluutru::find($id);
+        $noiluutru->delete();
+        return redirect()->route('NoiLuuTru.dsNoiLuuTru')->with('success','Xóa thành công');
+
     }
 }

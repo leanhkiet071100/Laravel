@@ -8,6 +8,7 @@
 
 @section('sidebar')
     @parent
+
     @foreach($quanan as $value)
      <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('{{$value->Hinh_Quan}}');">
               <span class="mask bg-gradient-dark"></span>

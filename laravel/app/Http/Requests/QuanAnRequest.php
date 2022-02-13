@@ -28,10 +28,9 @@ class QuanAnRequest extends FormRequest
     {
         return [
             'tenquanan' => 'required|min:3|max:100',
-            'hinh' => 'required',
+            'hinh' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'diachiquanan' => 'required|min:3|max:100',
             'sdt' => 'required|min:5',
-           
         ];
     }
 
@@ -42,6 +41,8 @@ class QuanAnRequest extends FormRequest
                 'min' => ':attribute không được nhỏ hơn :min',
                 'max' => ':attribute không được lớn hơn :max',
                 'sdt.integer' => ':attribute phải là số',
+                'image' => ':attribute không đúng định dạng',
+                'mimes' => ':attribute không đúng định dạng',
         ];
     }
 

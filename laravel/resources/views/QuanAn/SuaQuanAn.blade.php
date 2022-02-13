@@ -48,7 +48,7 @@
 <label for="exampleFormControlInput1" class="form-label">Chọn địa danh</label>
 <select class="form-select" aria-label="Default select example" name="DiaDanh">
    @foreach($lsDiaDanh as $value)
-   <option value="{{$value->id}}"> @if($quanan->Id_Ddanh==$value->id)  {{$value->Ten_Ddanh}} @else {{$value->Ten_Ddanh}}  @endif </option>
+   <option value="{{$value->id}} "@if($quanan->Id_Ddanh==$value->id) selected @endif >   {{$value->Ten_Ddanh}}  </option>
    @endforeach
 </select>
 </div>

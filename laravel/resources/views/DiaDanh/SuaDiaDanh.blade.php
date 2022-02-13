@@ -7,10 +7,11 @@
     @endsection
 
     @section('sidebar')
-        @parent
-<form action="{{route('DiaDanh.SuaDiaDanh', ['id'=>$DiaDanh->id])}}" method="Post"  enctype="multipart/form-data">
+    @parent
+
+<form action="{{route('DiaDanh.SuaDiaDanhpatch', ['id'=>$DiaDanh->id])}}" method="Post"  enctype="multipart/form-data">
     @csrf
-        @method('PATCH')
+    @method('PATCH')
     <div class="container">
         <div class="row">
             <div class="col-4">
@@ -35,14 +36,11 @@
              <label for="exampleFormControlTextarea1" class="form-label">Lựa chọn miền</label>
         <select class="form-select" aria-label="Default select example" name="Mien">
                 @foreach($Mien as $value)
-            
-                <option value="{{$value->id}}">
-                       @if ( $value->id == $DiaDanh->Id_Mien)  {{$value->Ten_Mien}} @else {{$value->Ten_Mien}}  @endif
+                <option value="{{$value->id}}" @if ( $value->id == $DiaDanh->Id_Mien) selected @endif>
+                      {{$value->Ten_Mien}}
                 </option>
-         
                 @endforeach
         </div>
-       
       </select>
     <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>

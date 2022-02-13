@@ -8,7 +8,11 @@
 
 @section('sidebar')
     @parent
-
+      @if(session('success'))
+        <script>
+            alter('{{session('success')}}');
+        </script>
+      @endif
     <div class="card-header pb-0">
     <div class="row align-items-start">
         <div class="col-4">
@@ -82,7 +86,7 @@
                       <td class="align-middle text-end">
                           <a href="{{route('DiaDanh.SuaDiaDanh', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
                           <a href="{{route('DiaDanh.ChiTietDiaDanh', ['id'=>$value->id])}}"><button type="button" class="btn btn-warning">Chi tiết</button></a>
-                          <a onclick="return confirm('bạn có chắc muốn xoá quán {{$value->Ten_Ddanh}} ')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
+                          <a onclick="return confirm('bạn có chắc muốn xoá {{$value->Ten_Ddanh}} ')" href="{{route('DiaDanh.XoaDiaDanh',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
                     @endforeach

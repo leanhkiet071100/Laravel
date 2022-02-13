@@ -24,7 +24,7 @@ class DiaDanhRequest extends FormRequest
      public function rules()
     {
         return [
-            'TenDiaDanh' => 'required|min:3|max:100',
+            'TenDiaDanh' => 'required|min:3|max:100|unique:diadanhs,Ten_Ddanh',
             'DiaChi' => 'required|min:3|max:100',
             //'TenGoiKhac' => 'required',
             'CanhVat' => 'required|min:3|max:100',
@@ -46,6 +46,7 @@ class DiaDanhRequest extends FormRequest
                 'max' => ':attribute không được lớn hơn :max',
                 'numeric' => ':attribute phải là số',
                 'NhuCau.required' => "Vui lòng chọn lựa nhu cầu",
+                'unique' => ':attribute đã tồn tại',
                 //'Hinh.mimes' => 'Hình ảnh phải có định dạng jpeg,png,jpg,gif,svg',
         ];
     }
