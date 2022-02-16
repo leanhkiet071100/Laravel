@@ -57,7 +57,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên địa danh</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Người đăng</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Chức năng</th>
                     </tr>
                   </thead>
@@ -85,15 +85,7 @@
                       </td>
                 
                     
-                      @if($value->TrangThaiDiaDanh  == 1)
-                          <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Đang hoạt động</span>
-                      </td>
-                      @else
-                          <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Ngưng hoạt động</span>
-                      </td>
-                      @endif
+                 
                      
                       <td class="align-middle text-end">
                            <a onclick="return confirm('bạn có chắc muốn khôi phục lại')" href="{{route('DiaDanh.KhoiPhucDiaDanh',  ['id'=>$value->id])}}" class="btn btn-success">Khôi phục</a>

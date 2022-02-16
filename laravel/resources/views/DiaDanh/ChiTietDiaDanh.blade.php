@@ -36,6 +36,7 @@
         </div>
     </div>
 </div> 
+
 <div style="margin-top:30px"></div>
 <div class="row">
     <div class="col-6">
@@ -118,18 +119,22 @@
             <div class="container-fliud text-dark">
                 <span><b>Khác: </b></span>
                 <div class="action">
-                    <a href="{{route('ChiTietDiaDanh.dsQuanAn')}}"><button type="button" class="btn btn-outline-danger">Quán ăn</button></a>
-                      <a href="{{route('ChiTietDiaDanh.dsNoiLuuTru')}}"><button type="button" class="btn btn-outline-danger">Nơi Lưu Trú</button></a>
+                    <a href="{{route('DiaDanh.QuanAnDiaDanh',  ['id'=>$DiaDanh->id])}}"  class="btn btn-outline-danger"> Quán ăn</a>
+                    <a href="{{route('DiaDanh.NoiLuuTruDiaDanh', ['id'=>$DiaDanh->id])}}" class="btn btn-outline-danger">Nơi Lưu Trú</a>
+                    
                 </div>                     
             </div>
         </div>
     </div>
 </div>
+
 <div style="margin-top:20px">
     <div class="align-middle text-end">
-        <button type="submit" class="btn btn-outline-success ">Sửa</button>
-        <button type="button" class="btn btn-outline-danger">Xóa</button>
-        <button type="button" class="btn btn-outline-primary">Hủy</button>
+        <a href="{{route('DiaDanh.SuaDiaDanh', ['id'=>$DiaDanh->id])}}"  class="btn btn-outline-success">Sửa</a>
+        <a onclick="return confirm('bạn có chắc muốn xoá {{$DiaDanh->Ten_Ddanh}} ')" href="{{route('DiaDanh.XoaDiaDanh',  ['id'=>$DiaDanh->id])}}" class="btn btn-outline-danger">Xoá</a>
+  
+        <a href="{{route('DiaDanh.dsDiaDanh')}}"  class="btn btn-outline-primary">Hủy</a>
+      
     </div>
 </div>
 @endsection

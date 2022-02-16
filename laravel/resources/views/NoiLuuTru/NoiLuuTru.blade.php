@@ -111,12 +111,13 @@
             </div>
 
 
-<div class="text-dark">
-  <h4>Thêm nơi lưu trú</h4>
-</div>
+
 
 
 @if($lsnoiluutru1 == null)
+<div class="text-dark">
+  <h4>Thêm nơi lưu trú</h4>
+</div>
 <form action="{{route('NoiLuuTru.ThemNoiLuuTruPost')}}" method="Post" enctype="multipart/form-data">
     @csrf
     <div class="row">
@@ -172,6 +173,9 @@
   </div>
 </form>
 @else
+<div class="text-dark">
+  <h4>Thêm nơi lưu trú</h4>
+</div>
 <form action="{{route('NoiLuuTru.SuaNoiLuuTruPatch', ['id'=> $lsnoiluutru1->id])}}" method="Post" enctype="multipart/form-data">
     @csrf
     @method('PATCH')

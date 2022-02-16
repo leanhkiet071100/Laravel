@@ -7,6 +7,8 @@ use App\Models\Diadanh;
 use App\Models\Nguoidung;
 use App\Models\NhuCau;
 use App\Models\Mien;
+use App\Models\Quanan;
+use App\Models\Noiluutru;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DiaDanhRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -29,6 +31,15 @@ class DiaDanhController extends Controller
             $DiaDanh->hinh = '/img/no_img.png';
         }
     }
+
+      protected function fixImageQuan(Quanan $quanans)
+        {
+            if(Storage::disk('public')->exists($quanans->Hinh_Quan)){
+                 $quanans->Hinh_Quan = Storage::url( $quanans->Hinh_Quan);
+            }else {
+                 $quanans->Hinh_Quan = '/img/no_img.png';
+            }
+        }
 
     public function index()
     {
@@ -197,5 +208,50 @@ class DiaDanhController extends Controller
         $DiaDanh = Diadanh::onlyTrashed()->where('id', '=', $id)->first();
         $DiaDanh->restore();
         return Redirect::route('DiaDanh.dsDiaDanh')->with('success','Khôi phục thành công');
+    }
+
+    public function quanan($id){
+        $lsquanan =  Diadanh::find($id)->quanan()->paginate(10);
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        $DiaDanh = Diadanh::find($id);
+
+        return View('DiaDanh.QuanAnDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsquanan' => $lsquanan]);
+    }
+
+    public function timquanan($id)
+    {
+        $keyword = request()->TenQuanAn;
+        $lsquanan =  Diadanh::find($id)->quanan()->where('Ten_Quan','like','%'.$keyword.'%')->paginate(10);
+        foreach ($lsquanan as $quanan) {
+             $this->fixImageQuan($quanan);
+        }
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        $DiaDanh = Diadanh::find($id);
+
+        return View('DiaDanh.QuanAnDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsquanan' => $lsquanan]);
+    }
+
+    public function noiluutru($id){
+        $lsnoiluutru =  Diadanh::find($id)->noiluutru()->paginate(10);
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        $DiaDanh = Diadanh::find($id);
+    $lsnoiluutru1 = Noiluutru::find($id);
+    
+        return View('DiaDanh.NoiLuutruDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsnoiluutru' => $lsnoiluutru, 'lsnoiluutru1' => $lsnoiluutru1]);
+    }
+
+    public function timnoiluutru($id)
+    {
+        $keyword = request()->NoiLuuTru;
+        $lsnoiluutru =  Diadanh::find($id)->noiluutru()->where('Ten_Noiluutru','like','%'.$keyword.'%')->paginate(10);
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        $DiaDanh = Diadanh::find($id);
+         $lsnoiluutru1 = Noiluutru::find($id);
+      
+        return View('DiaDanh.NoiLuutruDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsnoiluutru' => $lsnoiluutru, 'lsnoiluutru1' => $lsnoiluutru1]);
     }
 }

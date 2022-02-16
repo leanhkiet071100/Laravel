@@ -44,6 +44,14 @@ Route::prefix('Admin')->group(function(){
             route::get('/DanhSachXoaDiaDanh', [DiaDanhController::class, 'dsXoa'])->name('DanhSachXoaDiaDanh');
             route::get('/{tendiadanh}.html', [DiaDanhController::class, 'chitiet'])->name('ChiTietDiaDanhDaXoa');
             route::get('/KhoiPhucDiaDanh/{id}', [DiaDanhController::class, 'khoiphuc'])->name('KhoiPhucDiaDanh');
+
+            // quán ăn đỊa danh
+            route::get('/QuanAn/{id}', [DiaDanhController::class, 'quanan'])->name('QuanAnDiaDanh');
+            route::get('/TimQuanAn/{id}', [DiaDanhController::class, 'timquanan'])->name('TimQuanAnDiaDanh');
+
+            // nhu cầu đỊa danh
+            route::get('/NoiLuuTru/{id}', [DiaDanhController::class, 'noiluutru'])->name('NoiLuuTruDiaDanh');
+            route::get('/TimNoiLuuTru/{id}', [DiaDanhController::class, 'timnoiluutru'])->name('TimNoiLuuTru');
     });
     
     });
