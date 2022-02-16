@@ -13,17 +13,30 @@
             alter('{{session('success')}}');
         </script>
       @endif
-    <div class="card-header pb-0">
-    <div class="row align-items-start">
-        <div class="col-4">
-           <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Tên địa danh</label>
-            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh" name="TenDiaDanh">
+    <form action="{{Route('DiaDanh.TimkiemDiaDanh')}}" method="post">
+      @csrf
+      <div class="card-header pb-0">
+      <div class="row align-items-start">
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Tên địa danh</label>
+              <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh" name="TenDiaDanh">
+            </div>
+          <div class="mp-3">
+              <select class="form-select" aria-label="Default select example" name="Mien">
+                <option value="0">Tất cả miền</option>
+                @foreach($Mien as $value)
+                <option value="{{$value->id}}">{{$value->Ten_Mien}}</option>
+                @endforeach
+                  </select>
           </div>
-        </div>
-     
-        <div class="col-2 my-4">
-            <button type="button" class="btn btn-success">Tìm kiếm</button>
+          </div>
+
+          <div class="col-2 my-4">
+            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+      
+    </form>
+           <a href="{{route('DiaDanh.DanhSachXoaDiaDanh')}}"><button type="button" class="btn btn-info">Danh sách sản phẩm đã xoá</button></a>
 </div>
     </div>
 

@@ -36,9 +36,10 @@
                 @foreach($Mien as $value)
                 <option value="{{$value->id}}">{{$value->Ten_Mien}}</option>
                 @endforeach
+                  </select>
         </div>
        
-      </select>
+    
     <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
             <input type="text" class="form-control"  placeholder="Địa chỉ" name="DiaChi" value="{{old('DiaChi')}}">

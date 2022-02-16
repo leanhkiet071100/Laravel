@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
 class DiaDanhController extends Controller
 {
     /**
@@ -31,10 +32,10 @@ class DiaDanhController extends Controller
 
     public function index()
     {
-        $lsdiadanh = Diadanh::Paginate(5);
+        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10); 
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
-        return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau]);
+        return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau, 'Mien' => $Mien]);
     }
 
     /**
@@ -67,6 +68,7 @@ class DiaDanhController extends Controller
             'Id_Nguoidung'=>3,
             'Id_Nhucau'=>$request->input('NhuCau'),
             'TrangThaiDiaDanh'=>1,
+            'hinh'=>'',
         ]);
         $DiaDanh->save();
         
@@ -148,4 +150,52 @@ class DiaDanhController extends Controller
         return Redirect::route('DiaDanh.dsDiaDanh')->with('success','Xóa thành công');
     }
   
+    public function search(){
+        // $keyword = request()->TenDiaDanh;
+        // $DiaDanh = Diadanh::where('Ten_Ddanh','like','%'.$keyword.'%')->paginate(10);
+        // $NhuCau = NhuCau::all();
+        // $Mien =  Mien::all();
+
+        $keyword = request()->TenDiaDanh;
+        $MienKey = request()->Mien;
+      if($MienKey == 0){
+        $DiaDanh = Diadanh::where('Ten_Ddanh','like','%'.$keyword.'%')->paginate(10);
+          }
+        else{
+
+        $DiaDanh = Diadanh::where('Ten_Ddanh','like','%'.$keyword.'%')->where('Id_Mien','=',$MienKey)->paginate(10);
+    }
+        $Mien =  Mien::all();
+
+        return View('DiaDanh.DiaDanh',['lsdiadanh' => $DiaDanh, 'Mien' => $Mien]);
+
+    }
+
+      public function dsXoa(){
+        //$lsDDXoa = Diadanh::Withtrashed()->get();// lấy hết danh sách bao goòm xóa mền
+        $lsDDXoa = Diadanh::onlyTrashed()->paginate(10);// danh sách xóa mềm
+         $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return View('DiaDanh.dsXoa',['lsDDXoa' => $lsDDXoa, 'NhuCau' => $NhuCau, 'Mien' => $Mien]);
+  
+    }
+
+    public function chitiet($tendiadanh){
+        //$DiaDanh = Diadanh::where('Ten_Ddanh','=',$tendiadanh)->first();
+        $DiaDanh = Diadanh::withTrashed()->where('Ten_Ddanh','=',$tendiadanh)->first();
+        //$DiaDanh = Diadanh::olyTrashed()->where('Ten_Ddanh','=',$tendiadanh)->first();
+
+   
+        //$DiaDanh = Diadanh::olyTrashed()->Where('Ten_Ddanh', '=', $tendiadanh)->first();
+        //$DiaDanh = Diadanh::olyTrashed()->Where('id', '=', $id)->first();
+        $NhuCau = NhuCau::all();
+        $Mien =  Mien::all();
+        return View('DiaDanh.ChiTietDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien]);
+    }
+
+    public function khoiphuc($id){
+        $DiaDanh = Diadanh::onlyTrashed()->where('id', '=', $id)->first();
+        $DiaDanh->restore();
+        return Redirect::route('DiaDanh.dsDiaDanh')->with('success','Khôi phục thành công');
+    }
 }

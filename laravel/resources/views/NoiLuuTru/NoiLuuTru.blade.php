@@ -13,6 +13,7 @@
             {{session('success')}}
         </div>
     @endif
+    <form action="{{route('NoiLuuTru.TimNoiLuuTru')}}" method="GET">
     <div class="card-header pb-0">
     <div class="text-dark">
       <h4>Tìm kiếm nơi lưu trú</h4>
@@ -21,24 +22,25 @@
         <div class="col-4">
            <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Tên nơi lưu trú</label>
-            <input type="text" class="form-control" id="TenNoiLuuTruTimKiem" placeholder="Tên nơi lưu trú">
+            <input type="text" class="form-control" id="TenNoiLuuTruTimKiem" placeholder="Tên nơi lưu trú" name="NoiLuuTru">
           </div>
         </div>
        
         <div class="col-3">
             <label for="exampleFormControlInput1" class="form-label">Địa danh</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected>All</option>
+            <select class="form-select" aria-label="Default select example" name="DiaDanh">
+              <option value="0" selected>All</option>
               @foreach($lsdiadanh as $key =>$value)
-              <option value="{{$key}}">{{$value->Ten_Ddanh}}</option>
+              <option value="{{$value->id}}">{{$value->Ten_Ddanh}}</option>
             
               @endforeach
             </select>
         </div>
        
         <div class="col-2 my-4">
-            <button type="button" class="btn btn-success">Tìm kiếm</button>
+            <button type="submit" class="btn btn-success">Tìm kiếm</button>
     </div>
+    </form>
     <div class="text-dark">
       <h4>Danh sách nơi lưu trú</h4>
     </div>

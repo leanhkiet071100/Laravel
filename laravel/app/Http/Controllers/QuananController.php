@@ -39,6 +39,7 @@ class QuanAnController extends Controller
 
         // phân trang
         $lsquanan = Quanan::simplePaginate(5);
+
         foreach ($lsquanan as $quanans) {
             $this->fixImage($quanans);
         }
@@ -176,4 +177,22 @@ class QuanAnController extends Controller
         $quanan = Quanan::find($id);
         $quanan->delete();
     }
+
+    //tìm kiếm quán ăn
+    public function search()
+    {
+        $tenquanan = request()->TenQuanAn;
+        $tendiadanh = request()->TenDiaDanh;
+        $lsquanan = QuanAn::join('diadanhs','diadanhs.id','=','quanans.Id_Ddanh')->Where('Ten_Quan','like','%'.$tenquanan.'%')->Where('Ten_Ddanh','like','%'.$tendiadanh.'%')->paginate(10);
+        //$lsquanan = DB::table('quanans')->where('Ten_Quan','like','%'.$keyword.'%')->get();
+        foreach ($lsquanan as $quanans) {
+            $this->fixImage($quanans);
+        }
+        $lsDiaDanh = DiaDanh::all();
+        return View('QuanAn.QuanAn',['lsquanan' => $lsquanan, 'lsDiaDanh' => $lsDiaDanh]);
+    }
+
+    // load danh sách đã xoá
+  
+
 }

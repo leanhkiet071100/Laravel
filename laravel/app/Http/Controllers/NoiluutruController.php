@@ -118,4 +118,25 @@ class NoiluutruController extends Controller
         return redirect()->route('NoiLuuTru.dsNoiLuuTru')->with('success','Xóa thành công');
 
     }
+    //tìm kiếm nơi lưu trú
+    public function search(Request $request, $id=0)
+    {
+        $keyword = $request->input('NoiLuuTru');
+        $DiaDanh = $request->input('DiaDanh');
+        if($DiaDanh == 0)
+        {
+            $lsnoiluutru = Noiluutru::where('Ten_Noiluutru','like','%'.$keyword.'%')->simplePaginate(5);
+        }
+        else
+        {
+            $lsnoiluutru = Noiluutru::where('Ten_Noiluutru','like','%'.$keyword.'%')->where('Id_Ddanh',$DiaDanh)->simplePaginate(5);
+        }
+        //$lsnoiluutru = Noiluutru::where('Ten_Noiluutru','like',"%$keyword%")->where('Id_Ddanh',$DiaDanh)->simplePaginate(5);
+        foreach ($lsnoiluutru as $noiluutru) {
+            $this->fixImage($noiluutru);
+        }
+        $lsdiadanh = Diadanh::all();
+        $lsnoiluutru1 = Noiluutru::find($id);
+        return view('NoiLuutru.NoiLuutru',['lsnoiluutru' => $lsnoiluutru, 'lsdiadanh' => $lsdiadanh, 'lsnoiluutru1' => $lsnoiluutru1]);
+    }
 }

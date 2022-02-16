@@ -8,26 +8,27 @@
 
 @section('sidebar')
     @parent
-
+<form action="{{route('QuanAn.TimQuanAn')}}" method="get">
     <div class="card-header pb-0">
     <div class="row align-items-start">
         <div class="col-4">
            <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Tên quán ăn</label>
-            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên quán ăn">
+            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên quán ăn" name="TenQuanAn">
           </div>
         </div>
         <div class="col-3">
              <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Tên địa danh</label>
-            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh">
+            <input type="text" class="form-control" id="TenDiaDanhTimKiem" placeholder="Tên địa danh" name="TenDiaDanh">
           </div>
         </div>
         <div class="col-2 my-4">
-            <button type="button" class="btn btn-success">Tìm kiếm</button>
+            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+           
 </div>
     </div>
-
+</form>
     <div class="card-header pb-0">
                <div class="row align-items-start">
         <div class="col-6">
@@ -91,7 +92,7 @@
                      
                       <td class="align-middle text-end">
                           <a href="{{route('QuanAn.SuaQuanAn', ['id'=>$value->id])}}" > <button type="button" class="btn btn-success">Sửa</button></a>
-                          <a href="{{route('QuanAn.MonAn')}}"><button type="button" class="btn btn-warning">Món ăn</button></a>
+                          <a href="{{route('MonAn', ['id'=>$value->id])}}"><button type="button" class="btn btn-warning">Món ăn</button></a>
                           <a onclick="return confirm('bạn có chắc muốn xoá quán {{$value->Ten_Quan}} ')" href="{{route('QuanAn.XoaQuanAn',  ['id'=>$value->id])}}" class="btn btn-danger">Xoá</a>
                       </td>
                     </tr>
