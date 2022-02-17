@@ -19,6 +19,7 @@ class BaivietController extends Controller
         $dataDiaDanh = Db::select('SELECT baiviet.Id_Baiviet,Noidung,Luotthich,hinhanh_baiviet.Ten_Hinhanh,nguoidungs.Hoten_Nguoidung,diadanh.Ten_Ddanh,hinhanh_diadanh.Ten_Hinhanh_Ddanh,diadanh.Diachi_Ddanh,diadanh.Kinhdo,diadanh.Vido
         FROM baiviet,hinhanh_baiviet,nguoidungs,diadanh,hinhanh_diadanh
         WHERE baiviet.Id_Baiviet = hinhanh_baiviet.Id_Baiviet AND nguoidungs.Id_Nguoidung = baiviet.Id_Nguoidung AND diadanh.Id_Ddanh = baiviet.Id_Ddanh AND hinhanh_diadanh.Id_Ddanh = diadanh.Id_Ddanh');
+   
         return $dataDiaDanh;
         //$lstDiadanh=Diadanh::all();
         //return view('DiaDanh/dsDiaDanh',['lstDiadanh' => $lstDiadanh]);
@@ -33,7 +34,7 @@ class BaivietController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

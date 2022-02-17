@@ -7,6 +7,7 @@ use App\Http\Controllers\NhuCauController;
 use App\Http\Controllers\QuanAnController;
 use App\Http\Controllers\NoiluutruController;
 use App\Http\Controllers\MonanController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,15 +19,15 @@ use App\Http\Controllers\MonanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-   Route::get('/', function () {
-        return view('DangNhap.DangNhap');
-    });
+   Route::get('/',[loginController::class, 'showform'])->name('formdangnhap');
+    Route::post('/dangnhap', [loginController:: class,'dangnhap'])->name('dangnhap');
+
 Route::prefix('Admin')->group(function(){
  
 
     Route::get('/', function(){
         return view('Dashboard.Dashboard');
-    })->name('Dashboard');
+    })->name('Dashboard')->middleware('Login');
 
     Route::prefix('DiaDanh')->group(function(){
         Route::name('DiaDanh.')->group(function(){ 

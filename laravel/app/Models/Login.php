@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-
-
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Nguoidung extends Model
+class Login extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    public function diadanh(){
-        return $this->belongsToMany(Diadanh::class);
+
+    protected $table = 'nguoidungs';
+    
+    protected $fillable = ["MatKhau"];
+    public function getAuthPassword()
+    {
+        return $this->MatKhau;
+
     }
 }
-   

@@ -18,6 +18,6 @@ class Monan extends Model
         'Trangthai'
     ];
     protected $primaryKey = "Id_Mon";
-    protected $table = "monan";
+    protected $table = "monans";
 
 }

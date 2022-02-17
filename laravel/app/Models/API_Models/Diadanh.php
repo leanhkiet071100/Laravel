@@ -13,6 +13,6 @@ class Diadanh extends Model
         'Ten_Ddanh',
     ];   
     protected $primaryKey = "Id_Ddanh";
-    protected $table = "diadanh";
+    protected $table = "diadanhs";
 }
     

@@ -13,5 +13,5 @@ class Baiviet extends Model
         'Noidung',
     ];   
     protected $primaryKey = "Id_Baiviet";
-    protected $table = "baiviet";
+    protected $table = "baiviets";
 }
