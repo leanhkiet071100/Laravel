@@ -1,4 +1,4 @@
-@extends('layouts.appSua')
+@extends('layouts.app')
 
 
 @section('title', 'địa danh')

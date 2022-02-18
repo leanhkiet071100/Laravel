@@ -8,7 +8,7 @@
 
 @section('sidebar')
     @parent
-
+ 
     <div class="row">
 
       </div>

@@ -1,4 +1,4 @@
-@extends('layouts.appSua')
+@extends('layouts.app')
 
 @section('title', 'Nhu cầu')
 
@@ -8,6 +8,7 @@
 
 @section('sidebar')
     @parent
+
     @if(session('success'))
         <div class="alert alert-success">
             {{session('success')}}

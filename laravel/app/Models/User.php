@@ -22,6 +22,11 @@ class User extends Authenticatable
         //'name',
         'Taikhoan',
         'Matkhau',
+        'HinhAnh',
+        'Hoten_Nguoidung',
+        'Email',
+        'Sodienthoai',
+
     ];
 
     /**

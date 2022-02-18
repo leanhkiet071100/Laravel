@@ -37,6 +37,12 @@
 </head>
 
 <body class="">
+    @if(session('success'))
+      <script>
+        alert('{{session('success')}}');
+      </script>
+
+    @endif
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
@@ -62,16 +68,11 @@
                     Profile
                   </a>
                 </li>
+              
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="/pages/sign-up.html">
-                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="/pages/sign-in.html">
+                  <a class="nav-link me-2" href="{{route('dangki')}}">
                     <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                    Sign In
+                    Đăng kí
                   </a>
                 </li>
               </ul>
@@ -104,8 +105,8 @@
                           {{ $errors->first('error') }}
                        </div>
                   @endif
-                 <form action="{{route('dangnhap')}}" method="post">
-                   @csrf
+                 <form action="{{route('dangnhap')}}" method="get">
+
                 <div class="card-body">
                   <form role="form">
                     <label>TÀI KHOẢN</label>
@@ -132,14 +133,14 @@
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
                     <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Đăng nhậP</button>
+                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Đăng nhập</button>
                     </div>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">Đăng kí</a>
+                    Bạn có tài khoản chưa?
+                    <a href="{{route('dangki')}}" class="text-info text-gradient font-weight-bold">Đăng kí</a>
                   </p>
                 </div>
               </div>

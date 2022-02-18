@@ -14,10 +14,14 @@ use App\Http\Requests\DiaDanhRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Auth;
 
 class DiaDanhController extends Controller
 {
+    Public function __construct(){
+
+      $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +47,9 @@ class DiaDanhController extends Controller
 
     public function index()
     {
-        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10); 
+        $usser = Auth::user();
+        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10);
+    
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
         return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau, 'Mien' => $Mien]);

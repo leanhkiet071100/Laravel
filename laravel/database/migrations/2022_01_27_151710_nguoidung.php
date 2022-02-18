@@ -21,6 +21,7 @@ class Nguoidung extends Migration
             $table->string('Sodienthoai');
             $table->string('Taikhoan');
             $table->string('Matkhau');
+            $table->string('HinhAnh');
             $table->integer('Phanquyen');
             $table->integer('Trangthai_Hoten');
             $table->integer('Trangthai_Email');
