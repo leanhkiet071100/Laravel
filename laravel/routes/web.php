@@ -61,7 +61,7 @@ use App\Http\Controllers\DangKiController;
         });
 
         //Route::resource('DiaDanh',DiaDanhController::class);
-
+// NHU CẦU
         Route::prefix('NhuCau')->group(function(){
             Route::name('NhuCau.')->group(function(){ 
                 Route::get('/', [NhuCauController::class, 'index'])->name("dsNhuCau");
@@ -73,7 +73,7 @@ use App\Http\Controllers\DangKiController;
         });
         
         });
-
+// QUÁN ĂN
         Route::prefix('QuanAn')->group(function(){
             Route::name('QuanAn.')->group(function(){ 
                 Route::get('/', [QuanAnController::class, 'index'])->name("dsQuanAn");
@@ -98,7 +98,7 @@ use App\Http\Controllers\DangKiController;
 
         //Route::resource('QuanAn', QuanAnController::class);
     
-
+// NƠI LƯU TRÚ
     Route::prefix('NoiLuuTru')->group(function(){
         Route::name('NoiLuuTru.')->group(function(){ 
             Route::get('/',[NoiluutruController::class, 'index'])->name("dsNoiLuuTru");
@@ -111,7 +111,7 @@ use App\Http\Controllers\DangKiController;
     });
     });
 
-
+// DUYỆT ĐỊA DANH
     Route::prefix('DuyetDiaDanh')->group(function(){
         Route::name('DuyetDiaDanh.')->group(function(){ 
             Route::get('/', function(){
@@ -120,18 +120,8 @@ use App\Http\Controllers\DangKiController;
     });
     });
 
-    Route::prefix('ChiTietDiaDanh')->group(function(){
-        Route::name('ChiTietDiaDanh.')->group(function(){ 
-            Route::get('/', function(){
-                return view('DSNoiLuuTru-MonAn.dsNoiLuuTru');
-            })->name("dsNoiLuuTru");
-            Route::get('/QuanAn', function(){
-                return view('DSNoiLuuTru-MonAn.QuanAnDiaDanh');
-            })->name("dsQuanAn");
-    });
-    });
-    });
 
+    });
 
     });//middlware
 

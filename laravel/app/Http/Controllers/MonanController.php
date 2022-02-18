@@ -18,12 +18,21 @@ class MonanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-      protected function fixImage(Monan $MonAn)
+    protected function fixImage(Monan $MonAn)
         {
             if(Storage::disk('public')->exists($MonAn->Hinh_Mon)){
                  $MonAn->Hinh_Mon = Storage::url( $MonAn->Hinh_Mon);
             }else {
                  $MonAn->Hinh_Mon = '/img/no_img.png';
+            }
+        }
+
+    protected function fixImageQuan(Quanan $quanans)
+        {
+            if(Storage::disk('public')->exists($quanans->Hinh_Quan)){
+                 $quanans->Hinh_Quan = Storage::url( $quanans->Hinh_Quan);
+            }else {
+                 $quanans->Hinh_Quan = '/img/no_img.png';
             }
         }
 
@@ -33,8 +42,10 @@ class MonanController extends Controller
          foreach ($lsmonan as $monan) {
             $this->fixImage($monan);
         }
+
         $monan = Monan::find($idmon);
         $quanan =  Quanan::find($id);
+        $this->fixImageQuan($quanan);
         return view('MonAn.MonAn',['lsmonan' => $lsmonan, 'quanan' => $quanan, 'monan' => $monan]);
     }
 

@@ -49,13 +49,12 @@ class loginController extends Controller
         if($nguoidungs){
             $request->session()->regenerate();
             Auth::login($nguoidungs);
-            return redirect()->route('TrangChu', ['Hinh' => $hinh]);
+            return redirect()->route('TrangChu');
         }
         else{
              return  back()->withErrors([
             'error' => 'Tài khoản hoặc mật khẩu không đúng'
             ]);
-          
         }
     }
 
