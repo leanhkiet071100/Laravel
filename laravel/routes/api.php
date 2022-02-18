@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\DiadanhController;
+use App\Http\Controllers\api\DiadanhController;
 use App\Http\Controllers\API\NguoidungController;
 use App\Http\Controllers\API\MonanController;
 use App\Http\Controllers\API\QuananController;
@@ -24,6 +24,10 @@ Route::resource('/monan',MonanController::class);
 Route::resource('/quanan',QuananController::class);
 Route::resource('/khachsan',NoiluutruController::class);
 Route::resource('/baiviet',BaivietController::class);
+
+Route::get('/', [DiaDanhController::class, 'index'])->name('dsDiaDanh');
+
+Route::post('/monan/add', [MonanController::class, 'store'])->name('addMonan');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

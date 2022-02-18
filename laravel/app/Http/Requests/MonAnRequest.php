@@ -28,6 +28,7 @@ class MonAnRequest extends FormRequest
             'TenMon' => 'required',
             'GiaMon' => 'required|integer',
             'Hinh' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        
    
         ];
         
@@ -36,9 +37,12 @@ class MonAnRequest extends FormRequest
       public function messages()
     {
         return [
+          
                 'required' => ':attribute không được để trống',
                 'unique' => ':attribute đã tồn tại',
-                'max' => ':attribute không được lớn hơn :max',           
+                'max' => ':attribute không được lớn hơn :max',
+                'image' => ':attribute không đúng định dạng',
+                'mimes' => ':attribute không đúng định dạng',
         ];
     }
 

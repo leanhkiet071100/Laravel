@@ -62,7 +62,7 @@ return [
     'providers' => [
         'nguoidungs' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Nguoidung::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'nguoidungs' => [

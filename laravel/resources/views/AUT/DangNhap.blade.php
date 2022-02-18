@@ -55,12 +55,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/pages/dashboard.html">
-                    <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                    Dashboard
-                  </a>
-                </li>
+            
                 <li class="nav-item">
                   <a class="nav-link me-2" href="/pages/profile.html">
                     <i class="fa fa-user opacity-6 text-dark me-1"></i>
@@ -103,13 +98,19 @@
                   <h3 class="font-weight-bolder text-info text-gradient">KDOUBLEC</h3>
                   <p class="mb-0">VUI LÒNG ĐIỀN THÔNG TIN ĐĂNG NHẬP</p>
                 </div>
+                 <!-- hiện thông báo lỗi -->
+                  @if($errors->has('error')) 
+                       <div class="alert alert-danger">
+                          {{ $errors->first('error') }}
+                       </div>
+                  @endif
                  <form action="{{route('dangnhap')}}" method="post">
                    @csrf
                 <div class="card-body">
                   <form role="form">
                     <label>TÀI KHOẢN</label>
                     <div class="mb-3">
-                      <input type="text" class="form-control" placeholder="Tài khoản" aria-label="Email" aria-describedby="email-addon" name="TaiKhoan">
+                      <input type="text" class="form-control" placeholder="Tài khoản" name="TaiKhoan" value="{{old('TaiKhoan')}}">
                       <!-- hiển thị lỗi -->
                       @if($errors->has('TaiKhoan'))
                         <div style="color: red">
@@ -119,7 +120,7 @@
                     </div>
                     <label>MẬT KHẨu</label>
                     <div class="mb-3">
-                      <input type="password" class="form-control" placeholder="MậT khẩu" aria-label="Password" aria-describedby="password-addon" name="MatKhau">
+                      <input type="text" class="form-control" placeholder="MậT khẩu" aria-label="Password" aria-describedby="password-addon" name="MatKhau" value="{{old('MatKhau')}}">
                       @if($errors->has('MatKhau'))
                         <div style="color: red">
                           {{$errors->first('MatKhau')}}

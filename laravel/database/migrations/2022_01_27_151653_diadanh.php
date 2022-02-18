@@ -25,8 +25,8 @@ class Diadanh extends Migration
             $table->longText('Canhvat');
             $table->longText('Khihau');
             $table->longText('Tainghuyen');
-            $table->string('Kinhdo');
-            $table->string('Vido');
+            $table->double('Kinhdo');
+            $table->double('Vido');
             $table->integer('TrangThaiDiaDanh');
             $table->timestamps();
             $table->softDeletes();

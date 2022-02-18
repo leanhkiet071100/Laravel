@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\API_Models\Diadanh;
+use App\Models\Diadanh;
 use Illuminate\Support\Facades\DB;
+
 
 class DiadanhController extends Controller
 {
@@ -16,11 +17,22 @@ class DiadanhController extends Controller
      */
     public function index()
     {
-        $dataDiaDanh = Db::select('select diadanh.Id_Ddanh,Ten_Ddanh, Ten_Goikhac, Diachi_Ddanh, Canhvat, Khihau, Tainguyen, Kinhdo, Vido,hinhanh_diadanh.Ten_Hinhanh_Ddanh 
-        from diadanh,hinhanh_diadanh where diadanh.Id_Ddanh = hinhanh_diadanh.Id_Ddanh');
-        return $dataDiaDanh;
-        //$lstDiadanh=Diadanh::all();
-        //return view('DiaDanh/dsDiaDanh',['lstDiadanh' => $lstDiadanh]);
+        // $dataDiaDanh = Db::select('select diadanh.Id_Ddanh,Ten_Ddanh, Ten_Goikhac, Diachi_Ddanh, Canhvat, Khihau, Tainguyen, Kinhdo, Vido,hinhanh_diadanh.Ten_Hinhanh_Ddanh 
+        // from diadanh,hinhanh_diadanh where diadanh.Id_Ddanh = hinhanh_diadanh.Id_Ddanh');
+        // return response()->json($dataDiaDanh);
+
+        // $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->get(); 
+     
+        // return response()->json($lsdiadanh);
+
+        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10); 
+   
+        return response()->json($lsdiadanh);
+       
+
+     
+    
+     
               
     }
 

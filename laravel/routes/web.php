@@ -8,6 +8,7 @@ use App\Http\Controllers\QuanAnController;
 use App\Http\Controllers\NoiluutruController;
 use App\Http\Controllers\MonanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TrangChuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,7 @@ use App\Http\Controllers\LoginController;
 Route::prefix('Admin')->group(function(){
  
 
-    Route::get('/', function(){
-        return view('Dashboard.Dashboard');
-    })->name('Dashboard')->middleware('Login');
+    Route::get('/', [TrangChuController::class, 'index'])->name('TrangChu');
 
     Route::prefix('DiaDanh')->group(function(){
         Route::name('DiaDanh.')->group(function(){ 

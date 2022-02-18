@@ -27,7 +27,7 @@ class MonanController extends Controller
             }
         }
 
-    public function index($id, $idmon=11)
+    public function index($id, $idmon=0)
     {
         $lsmonan = Monan::where('Id_Quan', $id)->get();
          foreach ($lsmonan as $monan) {
@@ -46,7 +46,6 @@ class MonanController extends Controller
      */
     public function store(MonAnRequest $request, $id)
     {
-        
         $monan = new Monan;
         $monan->Ten_Mon = $request->input('TenMon');
         $monan->Gia_ban = $request->input('GiaMon');
@@ -58,6 +57,7 @@ class MonanController extends Controller
              $monan->Hinh_Mon = $request->file('Hinh')->store('img/monan/'.$monan->id,'public');
         }
 
+        
         $monan->save();
         //return Redirect::to('/quanan/'.$id.'/monan');
         return Redirect::Route('MonAn',['id' => $id])->with('success','Thêm món ăn thành công');

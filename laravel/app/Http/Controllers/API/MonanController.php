@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\API_Models\Monan;
+use App\Models\Monan;
 use Illuminate\Support\Facades\DB;
 
 class MonanController extends Controller
@@ -14,10 +14,20 @@ class MonanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+         protected function fixImage(Monan $MonAn)
+        {
+            if(Storage::disk('public')->exists($MonAn->Hinh_Mon)){
+                 $MonAn->Hinh_Mon = Storage::url( $MonAn->Hinh_Mon);
+            }else {
+                 $MonAn->Hinh_Mon = '/img/no_img.png';
+            }
+        }
     public function index()
     {
-        $dataMonan=DB::select('SELECT Id_Mon,Id_Quan,Ten_Mon,Hinh_Mon,Gia_ban FROM monan');
-        return $dataMonan;
+        $dataMonan=Monan::orderby('Ten_Mon')->get();
+        
+        Return response()->json($dataMonan);
     }
 
     /**
@@ -28,7 +38,35 @@ class MonanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $monan = new Monan;
+        $monan->Ten_Mon = $request->input('TenMon');
+        $monan->Gia_ban = $request->input('GiaMon');
+        $monan->Id_Quan = $request->input('IdQuan');
+        $monan->TrangThaiMonAn = 1;
+        $monan->Hinh_Mon = '';
+        $monan->save();
+        if($request->hasFile('Hinh')){
+            $monan->Hinh_Mon = $request->file('Hinh')->store('img/monan/'.$monan->id,'public');
+        }
+        $monan->save();
+        return $monan;
+    
+        //  $monan = new Monan;
+        // $monan->Ten_Mon =  $request->input('TenMon');
+        // $monan->Gia_ban =  $request->input('GiaMon');
+        // $monan->Id_Quan = $id;
+        // $monan->TrangThaiMonAn = 1;
+        // $monan->Hinh_Mon = '';
+        // $monan->save();
+        //  if($request->hasFile('Hinh')){
+        //      $monan->Hinh_Mon = $request->file('Hinh')->store('img/monan/'.$monan->id,'public');
+        // }
+
+        
+        // $monan->save();
+
+        // return $monan;
     }
 
     /**

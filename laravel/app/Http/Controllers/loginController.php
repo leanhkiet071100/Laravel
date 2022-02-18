@@ -13,16 +13,23 @@ class loginController extends Controller
 
     public function dangnhap(LoginRequest $request)
     {
-
-        // phương thức đăng nhập
-        if(Auth::attempt(['TaiKhoan' => $request->TaiKhoan, 'MatKhau' => $request->MatKhau])){
-            //$request->session()->put('TaiKhoan', $request->TaiKhoan);
-            $request->session()->regenerate(); // lưu session
-            return redirect()->route('Dashboard'); // trả về route dashboard
+              // phương thức đăng nhập
+        $credentials = $request->only('TaiKhoan', 'MatKhau');
+  
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('trangchu');
         }
+  
+        // if(Auth::attempt(['TaiKhoan' => $request->TaiKhoan, 'Matkhau' => $request->MatKhau])){
+        //     $request->session()->put('TaiKhoan', $request->TaiKhoan);
+        //     $request->session()->regenerate(); // lưu session
+        //     return redirect()->intended('Dashboard' ); // trả về route dashboard
+
+        //     return  View('TrangChu');
+        // }
         
-        return  back()->withError([
+        return  back()->withErrors([
             'error' => 'Tài khoản hoặc mật khẩu không đúng'
-        ]);
+        ]); 
     }
 }

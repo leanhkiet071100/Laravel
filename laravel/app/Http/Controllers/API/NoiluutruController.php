@@ -16,8 +16,11 @@ class NoiluutruController extends Controller
      */
     public function index()
     {
-        $dataNoiluutru = DB::select('SELECT Id_Noiluutru,Id_Ddanh,Ten_Noiluutru,Hinh_Noiluutru,Diachi_Noiluutru,SDT_Noiluutru FROM noiluutru ');
-        return $dataNoiluutru;
+        //$dataNoiluutru = DB::select('SELECT Id_Noiluutru,Id_Ddanh,Ten_Noiluutru,Hinh_Noiluutru,Diachi_Noiluutru,SDT_Noiluutru FROM noiluutru ');
+        //$dataNoiluutru = json_decode(json_encode($dataNoiluutru), true);
+        $dataNoiluutru = Noiluutru::all();
+        //return $dataNoiluutru;
+        return response()->json($dataNoiluutru);
     }
 
     /**

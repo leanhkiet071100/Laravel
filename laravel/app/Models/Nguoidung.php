@@ -13,6 +13,8 @@ class Nguoidung extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $table = 'nguoidungs';
+    Protected $fillable = ['Matkhau'];
     public function diadanh(){
         return $this->belongsToMany(Diadanh::class);
     }

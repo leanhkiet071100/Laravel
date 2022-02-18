@@ -17,9 +17,20 @@ class QuananController extends Controller
     public function index()
     {
         //return Quanan::all();
-        $data = DB::select('select Id_Quan,Id_Ddanh,Ten_Quan,Hinh_Quan,
-        Diachi_Quan,SDT_Quan,Trangthai from quanan');
-        return $data;
+        // $data = DB::select('select Id_Quan,Id_Ddanh,Ten_Quan,Hinh_Quan,
+        // Diachi_Quan,SDT_Quan,Trangthai from quanan');
+
+
+        // return $data;
+
+        $data = Quanan::all();
+        foreach ($data as $quanan) {
+            $quanan->Hinh_Quan = Storage::url($quanan->Hinh_Quan);
+        }
+        return response()->json($data);
+
+  
+
     }
 
     /**
