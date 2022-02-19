@@ -68,16 +68,16 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
+                           
+                           
+                              <img src="{{$value->Ten_Hinhanh_Ddanh}}" class="avatar avatar-sm me-3" alt="user1">
                        
+                          </div>
                         </div>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">{{$value->Ten_Ddanh}}</p>
-                    
                       </td>
-                    
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{$value->Diachi_Ddanh}}</span>
                       </td>

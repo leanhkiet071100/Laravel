@@ -108,11 +108,11 @@
     </div>
     <div class="mb-3">
     <label for="formFile" class="form-label">Hình ảnh</label>
-    <!-- <input class="form-control" type="file" id="HinhAnh" name="Hinh" value="{{old('Hinh')}}">
+    <input class="form-control" type="file" id="HinhAnh" name="image[]" value="{{old('Hinh')}}" multiple="multiple">
         @error('Hinh')
             <span style="color:red"> {{$message}}</span>
         @enderror
-    </div> -->
+    </div>
     <div class="align-middle text-end">
     <button type="submit" class="btn btn-outline-success ">Thêm</button>
     <button type="button" class="btn btn-outline-danger">Hủy</button>

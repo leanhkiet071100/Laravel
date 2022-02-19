@@ -116,12 +116,23 @@
         </div>
     </div>
     <div class="mb-3">
-    <label for="formFile" class="form-label">Hình ảnh</label>
-    <!-- <input class="form-control" type="file" id="HinhAnh" name="Hinh" value="{{old('Hinh')}}">
-        @error('Hinh')
+   
+               @foreach($lsHinh as $hinh)
+                    <label for="formFile" class="form-label">hình ảnh</label>
+                    <input class="form-control" type="file" id="HinhAnh" name="Hinh{{$hinh->id}}" value="{{old('Hinh')}}" >
+                    <img src="{{$hinh->Ten_Hinhanh_Ddanh}}" alt="" height="100" width="100"> </br>
+                @endforeach
+    
+ 
+    </div>
+
+        <div class="mb-3">
+    <label for="formFile" class="form-label">Thêm hình ảnh</label>
+    <input class="form-control" type="file" id="HinhAnh" name="image[]" value="{{old('Hinh')}}" multiple="multiple">
+        @error('image')
             <span style="color:red"> {{$message}}</span>
         @enderror
-    </div> -->
+    </div>
     <div class="align-middle text-end">
     <button type="submit" class="btn btn-outline-success ">Lưu</button>
     <button type="button" class="btn btn-outline-danger">Hủy</button>

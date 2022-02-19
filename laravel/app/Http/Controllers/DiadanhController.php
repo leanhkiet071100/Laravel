@@ -9,11 +9,13 @@ use App\Models\NhuCau;
 use App\Models\Mien;
 use App\Models\Quanan;
 use App\Models\Noiluutru;
+use App\Models\HinhDiaDanh;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DiaDanhRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+
 use Auth;
 
 class DiaDanhController extends Controller
@@ -27,16 +29,16 @@ class DiaDanhController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected function fixImage(Diadanh $DiaDanh)
+    protected function fixImage(HinhDiaDanh $HinhDiaDanh)
     {
-        if(Storage::disk('public')->exists($DiaDanh->hinh)){
-            $DiaDanh->hinh = Storage::url($DiaDanh->hinh);
+        if(Storage::disk('public')->exists($HinhDiaDanh->Ten_Hinhanh_Ddanh)){
+            $HinhDiaDanh->Ten_Hinhanh_Ddanh = Storage::url($HinhDiaDanh->Ten_Hinhanh_Ddanh);
         }else {
-            $DiaDanh->hinh = '/img/no_img.png';
+            $HinhDiaDanh->Ten_Hinhanh_Ddanh = '/img/no_img.png';
         }
     }
 
-      protected function fixImageQuan(Quanan $quanans)
+    protected function fixImageQuan(Quanan $quanans)
         {
             if(Storage::disk('public')->exists($quanans->Hinh_Quan)){
                  $quanans->Hinh_Quan = Storage::url( $quanans->Hinh_Quan);
@@ -47,12 +49,20 @@ class DiaDanhController extends Controller
 
     public function index()
     {
-        $usser = Auth::user();
-        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10);
-    
+        //$lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10);
+        $lsdiadanh = Diadanh::join('hinhanh_diadanhs', 'diadanhs.id', '=', 'hinhanh_diadanhs.Id_Ddanh')
+                            ->select('diadanhs.*', 'hinhanh_diadanhs.Ten_Hinhanh_Ddanh')
+                            ->orderby('diadanhs.id')->paginate(10);
+       
+        $lsHinh = HinhDiaDanh::all();
+        
+        foreach($lsHinh as $Hinh){
+            $this->fixImage($Hinh);
+        }
+        //dd($lsdiadanh);
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
-        return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau, 'Mien' => $Mien]);
+        return View('DiaDanh.DiaDanh',['lsdiadanh' => $lsdiadanh, 'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsHinh' => $lsHinh]);
     }
 
     /**
@@ -66,6 +76,7 @@ class DiaDanhController extends Controller
     {
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
+        $lsHinh = HinhDiaDanh::all();
         return View('DiaDanh.ThemDiaDanh',['NhuCau' => $NhuCau, 'Mien' => $Mien]);
     }
 
@@ -82,17 +93,21 @@ class DiaDanhController extends Controller
             'Kinhdo'=>$request->input('KinhDo'),
             'Vido'=>$request->input('ViDo'),
             'Id_Mien'=>$request->input('Mien'),
-            'Id_Nguoidung'=>3,
+            'Id_Nguoidung'=>Auth::user()->id,
             'Id_Nhucau'=>$request->input('NhuCau'),
             'TrangThaiDiaDanh'=>1,
-            'hinh'=>'',
         ]);
         $DiaDanh->save();
-        
-        // if($request->hasFile('hinh')){
-        //     $DiaDanh->hinh = $request->file('hinh')->store('img/'.$DiaDanh->id,'public');
-        // }
-        //$DiaDanh->save();
+
+        if($request->hasFile('image')){
+             for($i = 0; $i < count($request->file('image')); $i++){
+                $hinh = new HinhDiaDanh;
+                $hinh -> Id_Ddanh = $DiaDanh->id;
+                $hinh -> Ten_Hinhanh_Ddanh = $request->file('image')[$i]->store('img/hinhdiadanh'.$DiaDanh->id,'public');
+                $hinh -> TrangThaiHinhAnhDD = 1;
+                $hinh -> save();
+             }
+        }
         return Redirect::route('DiaDanh.ChiTietDiaDanh',['id'=>$DiaDanh->id]);
     }
 
@@ -107,9 +122,14 @@ class DiaDanhController extends Controller
         // $this->fixImage($DiaDanh);
         // $LuotXem = DB::table('luotxems')->Where('Id_Ddanh', '=', $DiaDanh->id )->count();
         $DiaDanh = Diadanh::find($id);
+        $lsHinh = HinhDiaDanh::where('Id_Ddanh', '=', $id)->get();
+        foreach($lsHinh as $Hinh){
+            $this->fixImage($Hinh);
+        }
+ 
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
-        return View('DiaDanh.ChiTietDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien]);
+        return View('DiaDanh.ChiTietDiaDanh',['DiaDanh'=>$DiaDanh,  'NhuCau' => $NhuCau, 'Mien' => $Mien, 'lsHinh' => $lsHinh]);
     
     }
 
@@ -126,13 +146,77 @@ class DiaDanhController extends Controller
         $DiaDanh = Diadanh::find($id);
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();
-        return view('DiaDanh.SuaDiaDanh',['NhuCau' => $NhuCau, 'Mien' => $Mien, 'DiaDanh' => $DiaDanh]);
+        $lsHinh = HinhDiaDanh::where('Id_Ddanh', '=', $id)->get();
+        foreach($lsHinh as $Hinh){
+            $this->fixImage($Hinh);
+        }
+        return view('DiaDanh.SuaDiaDanh',['NhuCau' => $NhuCau, 'Mien' => $Mien, 'DiaDanh' => $DiaDanh, 'lsHinh' => $lsHinh]);
     }
 
-    public function update(DiaDanhRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $rule = [
+            'TenDiaDanh' => 'required',
+            'DiaChi' => 'required',
+            'CanhVat' => 'required',
+            'KhiHau' => 'required',
+            'TaiNguyen' => 'required',
+            'KinhDo' => 'required',
+            'ViDo' => 'required',
+            'Mien' => 'required',
+            'NhuCau' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        $message = [
+            'required' => ':attribute không được để trống',
+            'image' => ':attribute phải là hình ảnh',
+        ];
+
+        $attribute = [
+            'TenDiaDanh' => 'Tên địa danh',
+            'DiaChi' => 'Địa chỉ',
+            'CanhVat' => 'Cảnh vật',
+            'KhiHau' => 'Khi hậu',
+            'TaiNguyen' => 'Tài nguyên',
+            'KinhDo' => 'Kinh độ',
+            'ViDo' => 'Vĩ độ',
+            'Mien' => 'Miền',
+            'NhuCau' => 'Nhu cầu',
+        ];
+        
+        
+        $request->validate($rule, $message, $attribute);
+
+
+
+
         $DiaDanh = Diadanh::find($id);
-        dd($request->all());
+        
+          $lsHinh = HinhDiaDanh::where('Id_Ddanh', '=', $id)->get();
+            foreach($lsHinh as $Hinh){
+              if($request->hasFile('Hinh'.$Hinh->id)){
+                $Hinh->Ten_Hinhanh_Ddanh = $request->file('Hinh'.$Hinh->id)->store('img/hinhdiadanh'.$DiaDanh->id,'public');
+                $Hinh->save();
+              }
+            }
+
+
+        
+        if($request->hasFile('image')){
+            //$lsHinh = HinhDiaDanh::where('Id_Ddanh', '=', $id)->get();
+            // foreach($lsHinh as $Hinh){
+            //     $Hinh->delete();
+            // }
+            for($i = 0; $i < count($request->file('image')); $i++){
+                $hinh = new HinhDiaDanh;
+                $hinh -> Id_Ddanh = $DiaDanh->id;
+                $hinh -> Ten_Hinhanh_Ddanh = $request->file('image')[$i]->store('img/hinhdiadanh'.$DiaDanh->id,'public');
+                $hinh -> TrangThaiHinhAnhDD = 1;
+                $hinh -> save();
+             }
+        }
+    
         $DiaDanh->fill([
             'Ten_Ddanh'=>$request->input('TenDiaDanh'),
             'Ten_Goikhac'=>$request->has('TenGoiKhac') ? $request->input('TenGoiKhac') : 'không có',
@@ -143,10 +227,12 @@ class DiaDanhController extends Controller
             'Kinhdo'=>$request->input('KinhDo'),
             'Vido'=>$request->input('ViDo'),
             'Id_Mien'=>$request->input('Mien'),
-            'Id_Nguoidung'=>3,
+            'Id_Nguoidung'=>Auth::user()->id,
             'Id_Nhucau'=>$request->input('NhuCau'),
             'TrangThaiDiaDanh'=>1,
         ]);
+
+     
         $DiaDanh->save();
         return Redirect::route('DiaDanh.ChiTietDiaDanh',['id'=>$DiaDanh->id])->with('success','Sửa thành công');
     

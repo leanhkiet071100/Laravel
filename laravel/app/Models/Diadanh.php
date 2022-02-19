@@ -34,5 +34,9 @@ class Diadanh extends Model
    public function noiluutru(){
          return $this->hasMany(Noiluutru::class, 'Id_Ddanh', 'id');
    }
+
+   public function hinhdiadanh(){
+         return $this->hasMany(HinhDiaDanh::class, 'Id_Ddanh', 'id');
+   }
 }
     

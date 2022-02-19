@@ -15,15 +15,12 @@
     <div class="preview">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
+                @foreach($lsHinh as $key => $value)
+                <div class="carousel-item {{$key == 0 ? 'active' : ''}}">
+                    <img class="d-block w-100" src="{{$value->Ten_Hinhanh_Ddanh}}" alt="First slide" height="550" width="1200">
                 </div>
-                <div class="carousel-item">
-                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
-                </div>
-                <div class="carousel-item">
-                    <img src="/assets/img/team-3.jpg" height="550" width="1200">
-                </div>
+              
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
