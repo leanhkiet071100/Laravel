@@ -42,7 +42,7 @@ class MonanController extends Controller
          foreach ($lsmonan as $monan) {
             $this->fixImage($monan);
         }
-
+        
         $monan = Monan::find($idmon);
         $quanan =  Quanan::find($id);
         $this->fixImageQuan($quanan);

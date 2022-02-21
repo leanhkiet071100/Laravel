@@ -9,15 +9,14 @@ Use App\models\User;
 
 class AthController extends Controller
 {
-    public function register(Request $request)
+    public function dangki(Request $request)
     {
         $data = $request->validate([
             'taikhoan'=>'required|max:255|unique:nguoidungs,taikhoan',
             'matkhau'=>'required|string',
             'email' => 'required|string|email|max:255|unique:nguoidungs,email',
-            'nhaplaimatkhau'=>'required|string',
             'hoten'=>'required|string|max:255',
-            'sdt'=>'required|muber|max:255',
+            'sdt'=>'required|max:255',
         ]);
 
         $input['Taikhoan'] = $request->input('taikhoan');
@@ -26,9 +25,9 @@ class AthController extends Controller
         $input['Hoten_Nguoidung'] = $request->input('hoten');
         $input['Sodienthoai'] = $request->input('sdt');
         $input['Phanquyen'] = 2;
-        $input['Trangthai'] = 1;
+        $input['TrangThaiNguoiDung'] = 1;
 
-        $user = nguoidungs::create($input);
+        $user = User::create($input);
         $response = [
             'message' => 'Đăng ký thành công',
             'data' => $user

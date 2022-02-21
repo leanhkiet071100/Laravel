@@ -32,6 +32,7 @@ Route::post('/monan/add', [MonanController::class, 'store'])->name('addMonan');
 
 // đăng nhập (login)
 Route::post('/login', [AthController::class, 'login'])->name('login');
+Route::post('/dangki', [AthController::class, 'dangki'])->name('register');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
