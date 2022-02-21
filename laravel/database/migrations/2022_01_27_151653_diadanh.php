@@ -20,7 +20,7 @@ class Diadanh extends Migration
             $table->foreignId('Id_Nguoidung');
             $table->string('Ten_Ddanh');
             $table->string('Ten_Goikhac');
-     
+            $table->string('Mota_Ddanh');
             $table->string('Diachi_Ddanh');
             $table->longText('Canhvat');
             $table->longText('Khihau');

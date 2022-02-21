@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\API_Models\Baiviet;
+use App\Models\Baiviet;
 use Illuminate\Support\Facades\DB;
 
 class BaivietController extends Controller

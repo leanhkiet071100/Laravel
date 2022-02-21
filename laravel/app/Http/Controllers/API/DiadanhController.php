@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Diadanh;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 class DiadanhController extends Controller
 {
@@ -17,17 +17,28 @@ class DiadanhController extends Controller
      */
     public function index()
     {
-        // $dataDiaDanh = Db::select('select diadanh.Id_Ddanh,Ten_Ddanh, Ten_Goikhac, Diachi_Ddanh, Canhvat, Khihau, Tainguyen, Kinhdo, Vido,hinhanh_diadanh.Ten_Hinhanh_Ddanh 
-        // from diadanh,hinhanh_diadanh where diadanh.Id_Ddanh = hinhanh_diadanh.Id_Ddanh');
+        // $dataDiaDanh = Db::select('select diadanhs.id,Ten_Ddanh, Ten_Goikhac, Diachi_Ddanh, Canhvat, Khihau, Tainguyen, Kinhdo, Vido,hinhanh_diadanhs.Ten_Hinhanh_Ddanh 
+        // from diadanhs,hinhanh_diadanhs where diadanhs.id = hinhanh_diadanhs.Id_Ddanh');
+
         // return response()->json($dataDiaDanh);
+
+        //  $dataDiaDanh = Diadanh::all();
+        //     return response()->json($dataDiaDanh);
+        //  dd($dataDiaDanh);
+
+        $dataDiaDanh= Diadanh::join('hinhanh_diadanhs','diadanhs.id','=','hinhanh_diadanhs.Id_Ddanh')->select('diadanhs.id','Ten_Ddanh','Ten_Goikhac','Diachi_Ddanh','Canhvat','Khihau','Tainguyen','Kinhdo','Vido','hinhanh_diadanhs.Ten_Hinhanh_Ddanh')->get();
+        foreach($dataDiaDanh as $diadanh){
+            $diadanh->Hinh_Ddanh = Storage::url($diadanh->Ten_Hinhanh_Ddanh);
+        }
+        return response()->json($dataDiaDanh);
 
         // $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->get(); 
      
         // return response()->json($lsdiadanh);
 
-        $lsdiadanh = Diadanh::orderby('Ten_Ddanh')->paginate(10); 
-   
-        return response()->json($lsdiadanh);
+        // $lsdiadanh = DB::table('diadanhs'); 
+       
+        // return response()->json($lsdiadanh);
        
 
      

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\API_Models\Noiluutru;
+use App\Models\Noiluutru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class NoiluutruController extends Controller
 {
@@ -20,6 +21,9 @@ class NoiluutruController extends Controller
         //$dataNoiluutru = json_decode(json_encode($dataNoiluutru), true);
         $dataNoiluutru = Noiluutru::all();
         //return $dataNoiluutru;
+        foreach ($dataNoiluutru as $noiluutru) {
+            $noiluutru->Hinh_Noiluutru = Storage::url($noiluutru->Hinh_Noiluutru);
+        }
         return response()->json($dataNoiluutru);
     }
 

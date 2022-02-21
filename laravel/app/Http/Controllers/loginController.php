@@ -44,13 +44,16 @@ class loginController extends Controller
         $MK = md5($credentials['MatKhau']);
        
         $nguoidungs =  User::where('Taikhoan',$request->TaiKhoan)->where('Matkhau',$MK)->first();
-        $this->fixImageNguoiDung($nguoidungs);
-        
-        if($nguoidungs){
+  
+        if($nguoidungs != null)
+        {
+         $this->fixImageNguoiDung($nguoidungs);
+    
             $request->session()->regenerate();
             Auth::login($nguoidungs);
             return redirect()->route('TrangChu');
         }
+
         else{
              return  back()->withErrors([
             'error' => 'Tài khoản hoặc mật khẩu không đúng'

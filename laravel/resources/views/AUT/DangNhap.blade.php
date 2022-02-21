@@ -41,7 +41,6 @@
       <script>
         alert('{{session('success')}}');
       </script>
-
     @endif
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
@@ -105,7 +104,7 @@
                           {{ $errors->first('error') }}
                        </div>
                   @endif
-                 <form action="{{route('dangnhap')}}" method="get">
+<form action="{{route('dangnhap')}}" method="get">
 
                 <div class="card-body">
                   <form role="form">

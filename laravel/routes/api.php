@@ -7,6 +7,7 @@ use App\Http\Controllers\API\MonanController;
 use App\Http\Controllers\API\QuananController;
 use App\Http\Controllers\API\NoiluutruController;
 use App\Http\Controllers\API\BaivietController;
+use App\Http\Controllers\API\AthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::resource('/baiviet',BaivietController::class);
 Route::get('/', [DiaDanhController::class, 'index'])->name('dsDiaDanh');
 
 Route::post('/monan/add', [MonanController::class, 'store'])->name('addMonan');
+
+// đăng nhập (login)
+Route::post('/login', [AthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
