@@ -15,9 +15,22 @@ class BaiViet extends Model
     protected $fillable = [
         'Id_Baiviet',
         'Noidung',
+        'Id_Ddanh',
+        'Id_Nguoidung',
+    
     ];   
     protected $primaryKey = "Id_Baiviet";
     protected $table = "baiviets";
+
+    public function nguoidung()
+    {
+        return $this->belongsTo('App\Models\NguoiDung', 'Id_Nguoidung', 'Id_Nguoidung');
+    }
+     
+    public function diadanh()
+    {
+        return $this->belongsTo('App\Models\Diadanh', 'Id_Diadanh', 'Id_Diadanh');
+    }
 
 
     public function hinhanh_baiviet()

@@ -38,5 +38,9 @@ class Diadanh extends Model
    public function hinhdiadanh(){
          return $this->hasMany(HinhDiaDanh::class, 'Id_Ddanh', 'id');
    }
+
+   public function baiviet(){
+         return $this->hasMany(BaiViet::class, 'Id_Ddanh', 'id');
+   }
 }
     

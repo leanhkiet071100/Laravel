@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\API_Models\Nguoidung;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+Use App\models\User;
 
 class NguoidungController extends Controller
 {
@@ -17,7 +18,12 @@ class NguoidungController extends Controller
      */
     public function index()
     {
-        return Nguoidung::all();
+        $user = User::all();
+        $response = [
+            'message' => 'Lấy danh sách người dùng thành công',
+            'data' => $user
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -39,7 +45,18 @@ class NguoidungController extends Controller
      */
     public function show($id)
     {
-        return Nguoidung::find($id);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'Không tìm thấy người dùng'
+            ], 404);
+        }
+        $response = [
+            'message' => 'Lấy thông tin người dùng thành công',
+            'data' => $user
+        ];
+        return response()->json($response, 200);
+
     }
 
     /**

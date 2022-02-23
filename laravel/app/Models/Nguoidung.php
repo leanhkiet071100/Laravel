@@ -18,5 +18,9 @@ class Nguoidung extends Model
     public function diadanh(){
         return $this->belongsToMany(Diadanh::class);
     }
+
+    public function baiviet(){
+        return $this->hasMany(BaiViet::class);
+    }
 }
    

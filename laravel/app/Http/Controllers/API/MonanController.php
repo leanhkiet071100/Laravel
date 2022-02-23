@@ -27,6 +27,9 @@ class MonanController extends Controller
     public function index()
     {
         $dataMonan=Monan::orderby('Ten_Mon')->get();
+        foreach ($dataMonan as $monan) {
+            $this->fixImage($monan);
+        }
         
         Return response()->json($dataMonan);
     }

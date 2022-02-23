@@ -35,7 +35,14 @@ class NoiluutruController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input= $request->all();
+          $validator=Validator::make($input,[
+            'ten_Noiluutru'=>'required|string|max:255',
+            'Hinh_Noiluutru'=>'required|string',
+            'Diachi_Noiluutru'=>'required|string',
+            'SDT_Noiluutru'=>'required|string',
+
+        ]);
     }
 
     /**
