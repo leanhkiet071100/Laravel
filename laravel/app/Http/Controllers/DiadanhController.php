@@ -53,12 +53,15 @@ class DiaDanhController extends Controller
         $lsdiadanh = Diadanh::join('hinhanh_diadanhs', 'diadanhs.id', '=', 'hinhanh_diadanhs.Id_Ddanh')
                             ->select('diadanhs.*', 'hinhanh_diadanhs.Ten_Hinhanh_Ddanh')
                             ->orderby('diadanhs.id')->paginate(10);
-       
+        
         $lsHinh = HinhDiaDanh::all();
         
         foreach($lsHinh as $Hinh){
             $this->fixImage($Hinh);
         }
+
+
+
         //dd($lsdiadanh);
         $NhuCau = NhuCau::all();
         $Mien =  Mien::all();

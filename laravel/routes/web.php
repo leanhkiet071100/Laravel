@@ -125,3 +125,6 @@ use App\Http\Controllers\DangKiController;
 
     });//middlware
 
+route::get('/sapxep', function(){
+    return view('welcome');
+});

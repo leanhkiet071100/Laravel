@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HinhBaiViet extends Model
 {
@@ -13,9 +14,12 @@ class HinhBaiViet extends Model
     protected $fillable = [
         'id',
         'Id_Baiviet',
-        'Hinh_Bv',]
+        
+        ]
     ;
     protected $primaryKey = "id";
+    protected $table = "hinhanh_baiviets";
+    
 
     public function baiviet()
     {

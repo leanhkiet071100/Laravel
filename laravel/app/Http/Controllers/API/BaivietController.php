@@ -5,10 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Baiviet;
+use App\Models\HinhBaiViet;
 use Illuminate\Support\Facades\DB;
 Use App\models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+Use App\models\Diadanh;
+use App\models\HinhDiaDanh;
+use App\models\Chitietdia;
+
 
 class BaivietController extends Controller
 {
@@ -30,7 +35,15 @@ class BaivietController extends Controller
                         ->select('baiviets.id', 'Noidung', 'Luotthich', 'hinhanh_baiviets.Ten_Hinhanh', 
                         'nguoidungs.Hoten_Nguoidung', 'diadanhs.Ten_Ddanh', 'hinhanh_diadanhs.Ten_Hinhanh_Ddanh',
                          'diadanhs.Diachi_Ddanh', 'diadanhs.Kinhdo', 'diadanhs.Vido')
-                        ->get();
+                        ->OrderBy('baiviets.id', 'desc')->limit(2)->get();
+
+       
+           
+
+        foreach($dataBaiviet as $baiviet){
+            $baiviet->Hinh_Baiviet = Storage::url($baiviet->Ten_Hinhanh);
+            $baiviet->Hinh_Ddanh = Storage::url($baiviet->Ten_Hinhanh_Ddanh);
+        }
         return response()->json($dataBaiviet);
         //$lstDiadanh=Diadanh::all();
         //return view('DiaDanh/dsDiaDanh',['lstDiadanh' => $lstDiadanh]);
@@ -45,35 +58,32 @@ class BaivietController extends Controller
      */
     public function store(Request $request)
     {
-        $atts = $request->validate([
-             'noidung' => 'required|max:300',
-             'iddiadanh' => 'required',]
-        );
-
-        $baiviet =  Baiviet::create(
-            [
-                'Id_Nguoidung' => 3,
-                'Id_Ddanh' => $request->input('Id_Ddanh'),
-                'Noidung' => $request->input('noidung'),
-            ]
-        );
+        
+        $validator = Validator::make($request->all(), [
+            'noidung' => 'required|max:300',
+            'iddiadanh' => 'required',
+            'hinhanh' => 'required',
+        ]);
 
         
-        $data = Baiviet::join('hinhanh_baiviets', 'baiviets.id', '=', 'hinhanh_baiviets.Id_Baiviet')
-                        ->join('nguoidungs', 'nguoidungs.id', '=', 'baiviets.Id_Nguoidung')
-                        ->join('diadanhs', 'diadanhs.id', '=', 'baiviets.Id_Ddanh')
-                        ->join('hinhanh_diadanhs', 'hinhanh_diadanhs.Id_Ddanh', '=', 'diadanhs.id')
-                        ->select('baiviets.id', 'Noidung', 'Luotthich', 'hinhanh_baiviets.Ten_Hinhanh', 
-                        'nguoidungs.Hoten_Nguoidung', 'diadanhs.Ten_Ddanh', 'hinhanh_diadanhs.Ten_Hinhanh_Ddanh',
-                         'diadanhs.Diachi_Ddanh', 'diadanhs.Kinhdo', 'diadanhs.Vido')
-                        ->get();
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+      
+        $baiviet =  Baiviet::create(
+            [
+                'Id_Nguoidung' => auth()->user()->id,
+                'Id_Ddanh' => $request->input('iddiadanh'),
+                'Noidung' => $request->input('noidung'),
+                'Hinh_Baiviet' => $request->input('hinhanh'),
+            ]
+        );
+       
+   
 
-    
-        return response([
-            'data' => $data,
-            'message' => 'Success',
-         
-        ], 200);
+
+        return response()->json( $baiviet, 200);
+       
    
         
     }
@@ -134,5 +144,28 @@ class BaivietController extends Controller
     public function destroy($id)
     {
          
+    }
+
+    // load bài viết người dùng
+    public function loadbaivietnguoidung(Request $request)
+    {
+         $dataBaiviet = Baiviet::join('hinhanh_baiviets', 'baiviets.id', '=', 'hinhanh_baiviets.Id_Baiviet')
+                        ->join('nguoidungs', 'nguoidungs.id', '=', 'baiviets.Id_Nguoidung')
+                        ->join('diadanhs', 'diadanhs.id', '=', 'baiviets.Id_Ddanh')
+                        ->join('hinhanh_diadanhs', 'hinhanh_diadanhs.Id_Ddanh', '=', 'diadanhs.id')
+                        ->select('baiviets.id', 'Noidung', 'Luotthich', 'hinhanh_baiviets.Ten_Hinhanh', 
+                        'nguoidungs.Hoten_Nguoidung', 'diadanhs.Ten_Ddanh', 'hinhanh_diadanhs.Ten_Hinhanh_Ddanh',
+                         'diadanhs.Diachi_Ddanh', 'diadanhs.Kinhdo', 'diadanhs.Vido')
+                        ->OrderBy('baiviets.id', 'desc')
+                        ->where('baiviets.Id_Nguoidung', '=', auth()->user()->id)
+                        ->get();
+        
+
+
+
+        return response()->json($dataBaiviet);
+        //$lstDiadanh=Diadanh::all();
+        //return view('DiaDanh/dsDiaDanh',['lstDiadanh' => $lstDiadanh]);
+              
     }
 }

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 Use App\models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+// token
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AthController extends Controller
 {
@@ -19,7 +22,6 @@ class AthController extends Controller
             'email' => 'required|string|email|max:255|unique:nguoidungs,email',
             'hoten'=>'required|string|max:255',
             'sdt'=>'required|max:255',
-          
         ],
             [
             'taikhoan.required'=>'Bạn chưa nhập tài khoản',
@@ -35,6 +37,7 @@ class AthController extends Controller
             'hoten.string'=>'Họ tên phải là chuỗi ký tự',
             'hoten.max'=>'Họ tên không được vượt quá 255 ký tự',
             'sdt.required'=>'Bạn chưa nhập số điện thoại',
+         
             ]
         );
         if ($validator->fails()) {
@@ -53,7 +56,8 @@ class AthController extends Controller
         $user = User::create($input);
         $response = [
             'message' => 'Đăng ký thành công',
-            'data' => $user
+            'data' => $user,
+            'Token' => $user->createToken('KdoubeC_login')->plainTextToken,
         ];
         
         return response()->json($response, 200);
@@ -77,12 +81,13 @@ class AthController extends Controller
         $taikhoan = $request->input('taikhoan');
         $matkhau = md5($request->input('matkhau'));
         $user = User::where('taikhoan', $taikhoan)->where('matkhau', $matkhau)->Where('Phanquyen', 2)->first();
+        $token = $user->createToken('KdoubeC_login')->plainTextToken;
         if($user){
-            $token = $user->createToken('KdoubeC_login')->plainTextToken;
+          
             $response = [
                 'message' => 'Đăng nhập thành công',
-                'data' => $user,
-                'token'=>$token
+                'data' =>  $user,
+                'token'=>  $token,
             ];
             return response()->json($response, 200);
         }
@@ -92,63 +97,96 @@ class AthController extends Controller
             ];
             return response()->json($response, 401);
         }
+
+       
         
     }
 
+    public function dangxuat(Request $request)
+    {
+         return response()->json(['message'=>'Đăng xuất thành công'], 200);
+    }
+
+    public function user()
+    {
+            return response([
+                'data'=>  auth()->user()
+            ],200);
+    }
+
+    public function getDetailUser()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+      
+        return response([
+            'data'=>  $user
+        ],200);
+    }
+    //đăng xuất
     public function logout()
     {
-        // đăng xuất bằng token
-         
-        //$request->user()->token()->revoke();
-        auth()->user()->token()->delete();
-        $response = [
+        auth()->user()->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+
+        return response()->json([
             'message' => 'Đăng xuất thành công'
-        ];
-        return response()->json($response, 200);
-    }
-
-    public function user(){
-        $response=[
-            "user" => auth()->user()
-        ];
-        return response()->json($response, 200);
-    }
-
-    // cập nhật người dùng
-         public function update(Request $request)
-    {
-        $attrs = $request->validate([
-            'hoten' => 'required|string',
-            'sdt' => 'required|string' ,
-            'email' => 'required|string'
-
-        ]);
-
-        auth()->user()->update([
-            'Hoten_Nguoidung' => $attrs['hoten'],
-            'Sodienthoai' => $attrs['sdt'],
-            'Email' => $attrs['email']
-    
-        ]);
-
-        return response([
-            'message' => 'Cập nhật thông tin của bạn thành công.',
-            'user' => auth()->user()
         ], 200);
     }
+
+       
+
+    // cập nhật người dùng
+public function suathongtin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+           
+            'email' => 'required|string|email|max:255|unique:nguoidungs,email,'.auth()->user()->id,
+            'hoten'=>'required|string|max:255',
+            'sdt'=>'required|max:255',
+        ],
+        [
+            'email.required'=>'Bạn chưa nhập email',
+            'email.string'=>'Email phải là chuỗi ký tự',
+            'email.email'=>'Email không đúng định dạng',
+            'email.max'=>'Email không được vượt quá 255 ký tự',
+            'hoten.required'=>'Bạn chưa nhập họ tên',
+            'hoten.string'=>'Họ tên phải là chuỗi ký tự',
+            'hoten.max'=>'Họ tên không được vượt quá 255 ký tự',
+            'sdt.required'=>'Bạn chưa nhập số điện thoại'
+        ]);
+        if ($validator->fails()) { 
+            return response()->json($validator->errors(), 400);
+        }
+
+        
+        $user = User::where('id', auth()->user()->id)->first();
+
+        $user->Email = $request->input('email');
+        $user->hoten_Nguoidung = $request->input('hoten');
+       // $user->Sodienthoai = $request->input('sdt');
+   
+        $user->save();
+        return response()->json([
+            'message' => 'Cập nhật thành công',
+            'data' => auth()->user()
+        ], 200);
+    
+}
+    
 
     //cập nhật mật khẩu
     public function changePassword(Request $request)
     {
         $attrs = $request->validate([
             'matkhau' => 'required',
-            'matkhaumoi' => 'required|string|different:password',
-            'nhaplaimatkhaumoi' => 'required|same:new_password',
+            'matkhaumoi' => 'required|string|different:matkhau',
+            'nhaplaimatkhaumoi' => 'required|same:matkhaumoi',
             
         ]);
-        $user = request()->user();
+        $user = auth()->user();
        $user->update([
-            'MatKhau' => md5($attrs['matkhaumoi']),
+            'Matkhau' => md5($attrs['matkhaumoi']),
         ]);
         return response([
             'message' => 'Đổi mật khẩu thành công.',
@@ -156,6 +194,26 @@ class AthController extends Controller
         ], 200);
 
     }
+
+    // thông tin người dùng theo id
+    public function getUser($id)
+    {
+        $user = User::find($id);
+        if($user){
+            $response = [
+                'message' => 'Lấy thông tin người dùng thành công',
+                'data' => $user
+            ];
+            return response()->json($response, 200);
+        }
+        else{
+            $response = [
+                'message' => 'Không tìm thấy người dùng',
+            ];
+            return response()->json($response, 404);
+        }
+    }
+
 
 }
 

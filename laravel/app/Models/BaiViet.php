@@ -17,6 +17,7 @@ class BaiViet extends Model
         'Noidung',
         'Id_Ddanh',
         'Id_Nguoidung',
+        'Hinh_Baiviet',
     
     ];   
     protected $primaryKey = "Id_Baiviet";

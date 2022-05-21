@@ -43,6 +43,21 @@ class loginController extends Controller
         //kiem tra dang nhap
         $MK = md5($credentials['MatKhau']);
        
+        // kiểm tra đăng nhập 
+
+        // $user = User::where('TaiKhoan', $credentials['TaiKhoan'])->first();
+        // if($user == null){
+        //     return redirect()->back()->with('thongbao', 'Tài khoản không tồn tại');
+        // }   
+        // if($user->MatKhau != $MK){
+        //     return redirect()->back()->with('thongbao', 'Mật khẩu không đúng');
+        // }
+        // if($user->TrangThai == 0){
+        //     return redirect()->back()->with('thongbao', 'Tài khoản đã bị khóa');
+        // }
+
+
+        // đăng nhập thành công
         $nguoidungs =  User::where('Taikhoan',$request->TaiKhoan)->where('Matkhau',$MK)->first();
   
         if($nguoidungs != null)
@@ -51,6 +66,7 @@ class loginController extends Controller
     
             $request->session()->regenerate();
             Auth::login($nguoidungs);
+            //DD(Auth::user());
             return redirect()->route('TrangChu');
         }
 

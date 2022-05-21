@@ -26,7 +26,10 @@ class DiadanhController extends Controller
         //     return response()->json($dataDiaDanh);
         //  dd($dataDiaDanh);
 
-        $dataDiaDanh= Diadanh::join('hinhanh_diadanhs','diadanhs.id','=','hinhanh_diadanhs.Id_Ddanh')->select('diadanhs.id','Ten_Ddanh','Ten_Goikhac','Diachi_Ddanh','Canhvat','Khihau','Tainguyen','Kinhdo','Vido','hinhanh_diadanhs.Ten_Hinhanh_Ddanh')->get();
+        $dataDiaDanh= Diadanh::join('hinhanh_diadanhs','diadanhs.id','=','hinhanh_diadanhs.Id_Ddanh')->select('diadanhs.id','Ten_Ddanh','Ten_Goikhac','Diachi_Ddanh','Canhvat','Khihau','Tainguyen','Kinhdo','Vido','hinhanh_diadanhs.Ten_Hinhanh_Ddanh')
+        ->OrderBy('diadanhs.created_at')
+        ->limit(3)
+        ->get();
         foreach($dataDiaDanh as $diadanh){
             $diadanh->Hinh_Ddanh = Storage::url($diadanh->Ten_Hinhanh_Ddanh);
         }
