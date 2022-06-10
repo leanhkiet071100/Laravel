@@ -60,7 +60,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/changPassword', [AthController::class, 'changePassword']);
     Route::put('/nguoidung', [AthController::class, 'suathongtin']);
     Route::get('/getdetailuser', [AthController::class, 'getDetailUser']);
-
     //bài viết
     Route::post('/thembaiviet', [BaivietController::class, 'store']);
     Route::get('/loadbaivietnguoidung', [BaivietController::class, 'loadbaivietnguoidung']);
